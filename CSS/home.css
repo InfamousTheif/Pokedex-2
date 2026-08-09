@@ -23,7 +23,7 @@
     font: inherit;
   }
 
-  button {
+  button, select {
     cursor: pointer;
   }
 
@@ -42,6 +42,7 @@
 
 body {
   font-family: "Varela Round";
+  background: color-mix(in srgb, #3b9ab265 70%, white);
 }
 
 header {
@@ -84,7 +85,7 @@ header {
   padding-block: 10px;
   padding-inline: 7px;
   border: solid black 1px;
-  border-radius: 10px;
+  border-radius: 30px;
 
   box-shadow: inset 0px 6px 25px 4px rgba(0, 0, 0, 0.5);
 
@@ -154,7 +155,7 @@ header {
   background: #38ad31;
   box-shadow: inset 0px 3px 3px 2px rgba(0, 0, 0, 0.4);
   border: solid black 2px;
-  border-radius: 10px;
+  border-radius: 30px;
 
 
   /* Removed default arrow due to stlying issues */
@@ -169,7 +170,73 @@ header {
   background-size: 10px;
 }
 
-option {
-  border-radius: 20px;
+.pokedex-wrapper_div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
+.pokemon-wrapper_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  
+  padding-block: 10px;
+  padding-inline: 10px;
+  border: solid white 1px;
+
+  background-image: url("../Assets/Images/pokemon-go-wallpaper-pokeball.webp");
+  background-repeat: no-repeat;
+  background-position: top 10px center;
+  background-size: 10.5rem;
+}
+
+.pokemon_img {
+  max-inline-size: 10rem;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.pokemon-name_p {
+  background: white;
+  border: solid #333333 2px;
+  border-radius: 30px;
+  padding-inline: 36px;
+  padding-block: 2px;
+
+  font-size: 1.4rem;
+  color: #333333;
+}
+
+.type_img {
+  max-inline-size: 2rem;
+}
+
+footer {
+  background: color-mix(in srgb, #A11524 , #E6192E 60%);
+  padding-block: 20px;
+  padding-inline: 20px;
+}
+
+.github-link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+
+  inline-size: 100%;
+  max-inline-size: 200px;
+  padding-block: 10px;
+  padding-inline: 7px;
+  border: solid black 1px;
+  border-radius: 30px;
+
+  box-shadow: inset 0px 6px 25px 4px rgba(0, 0, 0, 0.5);
+}
+
+.github-icon {
+  position: relative;
+  max-inline-size: 40px;
+}
