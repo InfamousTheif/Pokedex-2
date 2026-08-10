@@ -40,9 +40,75 @@
   src: url("../Assets/fonts/varela-round-v21-latin-regular.woff2");
 }
 
+:root {
+  /* color-scheme: light dark; */
+   /* Backgrounds */
+  --color-body-bg: light-dark(
+    color-mix(in srgb, #3b9ab265 70%, white),
+    color-mix(in srgb, #043b49 35%, black)
+  );
+
+  --color-header-bg: light-dark(
+    color-mix(in srgb, #A11524, #E6192E 60%),
+    #5c1019
+  );
+
+  --color-select-bg: light-dark(
+    #38ad13,
+    #236b1f
+  );
+
+  --color-toggle-bg: light-dark(
+    #21bce2,
+    #147a96
+  );
+
+  --color-name-bg: light-dark(
+    white,
+    #242424
+  );
+
+
+  /* Text */
+  --color-text-primary: light-dark(
+    #000000,
+    #ffffff
+  );
+
+  --color-text-secondary: light-dark(
+    #333333,
+    #ffffff
+  );
+
+
+  /* Borders */
+  --color-border-primary: light-dark(
+    #000000,
+    #ffffff
+  );
+
+  --color-border-white: light-dark(
+    #ffffff,
+    #ffffff
+  );
+
+  --color-border-secondary: light-dark(
+    #333333,
+    #ffffff
+  );
+
+
+  /* Shadows */
+  --color-shadow: light-dark(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.7)
+  );
+}
+
 body {
+  color-scheme: dark;
   font-family: "Varela Round";
-  background: color-mix(in srgb, #3b9ab265 70%, white);
+  background: var(--color-body-bg);
 }
 
 header {
@@ -52,7 +118,7 @@ header {
   align-items: center;
   justify-items: center;
 
-  background: color-mix(in srgb, #A11524 , #E6192E 60%);
+  background: var(--color-header-bg);
   padding-block: 20px;
   padding-inline: 5px;
 
@@ -84,7 +150,7 @@ header {
   max-inline-size: 500px;
   padding-block: 10px;
   padding-inline: 7px;
-  border: solid black 1px;
+  border: solid var(--color-border-primary) 1px;
   border-radius: 30px;
 
   box-shadow: inset 0px 6px 25px 4px rgba(0, 0, 0, 0.5);
@@ -96,19 +162,20 @@ header {
 
 .search-bar {
   inline-size: 100%;
-  color: black;
+  color: var(--color-text-primary);
   background: transparent;
   border: none;
   font-size: 1.4rem;
   outline: none;
 
   &::placeholder {
-    color: black;
+    color: var(--color-text-primary);
   }
 }
 
 .search-icon {
   max-inline-size: 30px;
+  color: var(--color-text-primary);
 }
 
 
@@ -116,15 +183,16 @@ header {
   display: flex;
   gap: 1rem;
   font-size: 1.1rem;
+  color: var(--color-text-primary);
 }
 
 .theme-toggle {
   position: relative;
   inline-size: 1.4rem;
   block-size: 1.4rem;
-  border: solid black 3px;
+  border: solid var(--color-border-primary) 3px;
   border-radius: 100%;
-  background: #21bce2;
+  background: var(--color-toggle-bg);
 
   &:hover {
     filter: brightness(80%);
@@ -152,9 +220,9 @@ header {
   padding-block: 10px;
   padding-inline-start: 10px;
   padding-inline-end: 40px;
-  background: #38ad31;
+  background: var(--color-select-bg);
   box-shadow: inset 0px 3px 3px 2px rgba(0, 0, 0, 0.4);
-  border: solid black 2px;
+  border: solid var(--color-border-primary) 2px;
   border-radius: 30px;
 
 
@@ -168,6 +236,10 @@ header {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 10px;
+
+  @media (prefers-color-scheme: dark) {
+    background-image: url(../Assets/Images/triangle-w.webp);
+  }
 }
 
 .pokedex-wrapper_div {
@@ -184,12 +256,17 @@ header {
   
   padding-block: 10px;
   padding-inline: 10px;
-  border: solid white 1px;
+  border-inline-end: solid var(--color-border-white) 2px;
+  border-block: solid var(--color-border-white) 1px;
 
   background-image: url("../Assets/Images/pokemon-go-wallpaper-pokeball.webp");
   background-repeat: no-repeat;
   background-position: top 10px center;
   background-size: 10.5rem;
+
+  @media (prefers-color-scheme: dark) {
+    background-image: url("../Assets/Images/pokeball-w.webp");
+  }
 }
 
 .pokemon_img {
@@ -199,14 +276,14 @@ header {
 }
 
 .pokemon-name_p {
-  background: white;
-  border: solid #333333 2px;
+  background: var(--color-name-bg);
+  border: solid var(--color-border-secondary) 2px;
   border-radius: 30px;
   padding-inline: 36px;
   padding-block: 2px;
 
   font-size: 1.4rem;
-  color: #333333;
+  color: var(--color-text-secondary);
 }
 
 .type_img {
@@ -214,7 +291,7 @@ header {
 }
 
 footer {
-  background: color-mix(in srgb, #A11524 , #E6192E 60%);
+  background: var(--color-header-bg);
   padding-block: 20px;
   padding-inline: 20px;
 }
@@ -228,15 +305,17 @@ footer {
 
   inline-size: 100%;
   max-inline-size: 200px;
-  padding-block: 10px;
+  padding-block: 5px;
   padding-inline: 7px;
-  border: solid black 1px;
+  border: solid var(--color-border-primary) 1px;
   border-radius: 30px;
 
   box-shadow: inset 0px 6px 25px 4px rgba(0, 0, 0, 0.5);
+  color: var(--color-border-primary);
 }
 
 .github-icon {
   position: relative;
   max-inline-size: 40px;
+  color: light-dark(#1b1f23, white);
 }
