@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pokedex-2</title>
   <link rel="stylesheet" href="../CSS/home.css">
+  <script src="../JS/theme-toggle.js" defer></script>
 </head>
 <body>
   <header>
@@ -34,8 +35,13 @@
     </div>
     
     <div class="header-theme_div">
-      <button class="theme-toggle" type="button"></button>
-      <p class="theme-label">Dark mode</p>
+      <button class="theme-toggle" type="button" aria-label="Open theme menu" aria-controls="theme-menu" aria-expanded="false"></button>
+      <p class="theme-label">Theme</p>
+      <ul class="theme-choices hide" id="theme-menu">
+        <li data-theme="light dark">OS</li>
+        <li data-theme="light">Light mode</li>
+        <li data-theme="dark">Dark mode</li>
+      </ul>
     </div>
   </header>
 
