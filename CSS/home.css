@@ -321,6 +321,11 @@ header {
   color: var(--color-text-secondary);
 }
 
+.type-wrapper_div {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .type_img {
   max-inline-size: 2rem;
 }
