@@ -8,7 +8,7 @@
   <script src="../JS/pokedex-init.js" type="module" defer></script>
 </head>
 <body>
-  <header>
+  <header id="pokedex-header">
 
     <div class="header-dropdown_div">
       <label class="dropdown-region_label sr-only" for="dropdown-region">Region:</label>
@@ -47,18 +47,9 @@
 
   <main>
 
-    <div class="pokedex-wrapper_div" id="pokedex-wrapper">
-      
-      <div class="pokemon-wrapper_div">
-        <img class="pokemon_img" src="../Assets/Images/froakie.png">
-        <p class="pokemon-name_p">Froakie</p>
-        <div class="type-wrapper_div">
-          <img class="type_img" src="../Assets/type-icons/water.avif">
-          <img class="type_img" src="../Assets/type-icons/dark.avif">
-        </div>
-      </div>
+    <div class="pokedex-wrapper_div" id="pokedex-wrapper"></div>
 
-    </div>
+    <a href="#pokedex-header" class="back-to-top_button" id="back-to-top">&#8593;</a>
 
   </main>
 

@@ -1,4 +1,5 @@
 import { themeToggling } from "./theme-toggle.js";
+import { displayTopButton } from "./back-to-top.js";
 const pokedexWrapper = document.querySelector("#pokedex-wrapper");
 
 async function fetchPokemon(limit, offset) {
@@ -68,4 +69,5 @@ function typeHTMLHandler(pokemon) {
 }
 
 themeToggling();
+displayTopButton();
 fetchPokemon(151, 0);

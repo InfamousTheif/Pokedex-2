@@ -319,6 +319,7 @@ header {
 
   font-size: 1.4rem;
   color: var(--color-text-secondary);
+  text-transform: capitalize;
 }
 
 .type-wrapper_div {
@@ -328,6 +329,21 @@ header {
 
 .type_img {
   max-inline-size: 2rem;
+}
+
+.back-to-top_button {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  
+  padding-block: 10px;
+  padding-inline: 30px;
+  border: solid 2px var(--color-border-primary);
+  border-radius: 30px;
+  color: var(--color-text-primary);
+  background: var(--color-header-bg);
+  font-size: 3rem;
 }
 
 footer {
@@ -363,4 +379,8 @@ footer {
 
 .hide {
   display: none;
+}
+
+.show {
+  display: block;
 }
