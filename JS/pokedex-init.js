@@ -1,6 +1,7 @@
 import { themeToggling } from "./theme-toggle.js";
 import { displayTopButton } from "./back-to-top.js";
 const pokedexWrapper = document.querySelector("#pokedex-wrapper");
+const regionSelect = document.querySelector("#dropdown-region");
 
 async function fetchPokemon(limit, offset) {
   const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}/`;
@@ -37,8 +38,6 @@ async function fetchPokemon(limit, offset) {
 function renderHTML(pokemonArr) {
 
   const html = pokemonArr.map((pokemon) => {
-    console.log(pokemon.types[0].type.name)
-    
 
     return `
       <div class="pokemon-wrapper_div">
@@ -51,10 +50,33 @@ function renderHTML(pokemonArr) {
     `;
   });
 
+  pokedexWrapper.innerHTML = "";
+
   html.forEach((item) => {
     pokedexWrapper.insertAdjacentHTML("beforeend", item)
   });
 
+}
+
+function regionHandler() {
+  const regions = {
+    Kanto:   [0, 151],    // #001 to #151 (151 Pokémon)
+    Johto:   [151, 100],  // #152 to #251 (100 Pokémon)
+    Hoenn:   [251, 135],  // #252 to #386 (135 Pokémon)
+    Sinnoh:  [386, 107],  // #387 to #493 (107 Pokémon)
+    Unova:   [493, 156],  // #494 to #649 (156 Pokémon)
+    Kalos:   [649, 72],   // #650 to #721 (72 Pokémon)
+    Alola:   [721, 88],   // #722 to #809 (88 Pokémon)
+    Galar:   [809, 89],   // #810 to #898 (89 Pokémon up to Calyrex)
+    Hisui:   [898, 7],    // #899 to #905 (7 completely new species introduced)
+    Paldea:  [905, 120]   // #906 to #1025 (120 Pokémon including DLC expansions)
+  };
+
+  regionSelect.addEventListener("change", (e) => {
+    const region = regions[e.target.value];
+    console.log(region)
+    fetchPokemon(region[1], region[0]);
+  });
 }
 
 function typeHTMLHandler(pokemon) {
@@ -70,4 +92,5 @@ function typeHTMLHandler(pokemon) {
 
 themeToggling();
 displayTopButton();
+regionHandler();
 fetchPokemon(151, 0);
