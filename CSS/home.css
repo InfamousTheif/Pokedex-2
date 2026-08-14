@@ -314,6 +314,7 @@ header {
   background: var(--color-name-bg);
   border: solid var(--color-border-secondary) 2px;
   border-radius: 30px;
+  inline-size: max-content;
   padding-inline: 36px;
   padding-block: 2px;
 
