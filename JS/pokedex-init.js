@@ -5,6 +5,8 @@ const regionSelect = document.querySelector("#dropdown-region");
 
 async function fetchPokemon(limit, offset) {
   const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}/`;
+  const localPokemonData = JSON.parse(localStorage.getItem(regionSelect.value)) || "";
+  console.log(localPokemonData, "Local");
   try {
     const response = await fetch(url);
     if(!response.ok) {
@@ -13,7 +15,6 @@ async function fetchPokemon(limit, offset) {
 
     const data = await response.json();
     const results = data.results;
-    console.log(results);
 
     const fetchPokemon = results.map((result) => {
       return fetch(result.url);
@@ -26,17 +27,27 @@ async function fetchPokemon(limit, offset) {
     }
 
     const pokemonData = await Promise.all(pokemonResponses.map(response => response.json()));
-    console.log(pokemonData);
 
-    renderHTML(pokemonData);
+    // Stripping the pokemonData array of the unused properties to avoid exceeding localStorage's limit.
+    const strippedData = pokemonData.map((data) => {
+      return {
+        name: data.name,
+        types: data.types,
+        sprites: data.sprites
+      }
+    });
+
+
+    localStorage.setItem(regionSelect.value, JSON.stringify(strippedData));
+
+    renderHTML(localPokemonData || strippedData);
 
   } catch (err) {
-    console.error("Network or parsing error", err);
+    console.error("Network or parsing error:", err);
   }
 }
 
 function renderHTML(pokemonArr) {
-
   const html = pokemonArr.map((pokemon) => {
 
     return `
@@ -55,7 +66,6 @@ function renderHTML(pokemonArr) {
   html.forEach((item) => {
     pokedexWrapper.insertAdjacentHTML("beforeend", item)
   });
-
 }
 
 function regionHandler() {
@@ -67,14 +77,13 @@ function regionHandler() {
     Unova:   [493, 156],  // #494 to #649 (156 Pokémon)
     Kalos:   [649, 72],   // #650 to #721 (72 Pokémon)
     Alola:   [721, 88],   // #722 to #809 (88 Pokémon)
-    Galar:   [809, 89],   // #810 to #898 (89 Pokémon up to Calyrex)
-    Hisui:   [898, 7],    // #899 to #905 (7 completely new species introduced)
+    Galar:   [809, 96],   // #810 to #898 (89 Pokémon up to Calyrex)
+    // Hisui:   [898, 7],    // #899 to #905 (7 completely new species introduced)
     Paldea:  [905, 120]   // #906 to #1025 (120 Pokémon including DLC expansions)
   };
 
   regionSelect.addEventListener("change", (e) => {
     const region = regions[e.target.value];
-    console.log(region)
     fetchPokemon(region[1], region[0]);
   });
 }
