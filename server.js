@@ -1,8 +1,6 @@
 import * as http from "node:http"; 
-import * as fs from "node:fs";
 import * as fsPromises from "fs/promises"
 import * as path from "path";
-import { dot } from "node:test/reporters";
 
 const server = http.createServer((req, res) => {
 
@@ -74,40 +72,8 @@ const server = http.createServer((req, res) => {
     ".ttf": "font/ttf"
   };
 
-  const extname = path.extname(req.url);
-
-  
-  // switch(req.url) {
-  //   case "/":
-  //     fs.readFile("./HTML/index.html", (err, data) => {
-  //       res.writeHead(200, {"Content-type": `${dotMimeTypes[extname]}`});
-  //       res.end(data);
-  //     });
-  //   break;
-  //   default:
-  //     res.writeHead(404, {"Content-type": "text/html"});
-  //     res.end("<h1>404 error. Page not found<h1>");   
-  // }
 
 
-  // if (req.url === "/") {
-  //   console.log("hi server");
-      
-  //     fs.readFile("./HTML/index.html", (err, data) => {
-  //       res.writeHead(200, {"Content-type": "text/html"});
-  //       res.end(data);
-  //     })
-  // } else if (req.url === "/CSS/home.css") {
-  //   console.log("css file");
-
-  //   fs.readFile("./CSS/home.css", (err, data) => {
-  //     res.writeHead(200, {"Content-type": "text/css" });
-  //     res.end(data);
-  //   })
-  // } else {
-  //     res.writeHead(404, { "Content-Type": "text/html" });
-  //     res.end("<h1>Page Not Found</h1>");
-  // }
 });
 
 server.listen(3000, () => {

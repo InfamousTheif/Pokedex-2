@@ -37,7 +37,7 @@
   font-family: "Varela Round";
   font-style: normal;
   font-weight: 400;
-  src: url("../Assets/fonts/varela-round-v21-latin-regular.woff2");
+  src: url("../fonts/varela-round-v21-latin-regular.woff2");
 }
 
 :root {
@@ -258,17 +258,17 @@ header {
   appearance: none;
 
   /* New arrow */
-  background-image: url("../Assets/Images/triangle.webp");
+  background-image: url("../Images/triangle.webp");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 10px;
 
   @media (prefers-color-scheme: dark) {
-    background-image: url("../Assets/Images/triangle-w.webp")
+    background-image: url("../Images/triangle-w.webp")
   }
 
   &.light-mode {
-    background-image: url("../Assets/Images/triangle.webp");
+    background-image: url("../Images/triangle.webp");
   }
 }
 
@@ -289,17 +289,17 @@ header {
   border-inline-end: solid var(--color-border-white) 2px;
   border-block: solid var(--color-border-white) 1px;
 
-  background-image: url("../Assets/Images/pokemon-go-wallpaper-pokeball.webp");
+  background-image: url("../Images/pokemon-go-wallpaper-pokeball.webp");
   background-repeat: no-repeat;
   background-position: top 10px center;
   background-size: 10.5rem;
 
   @media (prefers-color-scheme: dark) {
-    background-image: url("../Assets/Images/pokeball-w.webp")
+    background-image: url("../Images/pokeball-w.webp")
   }
 
   &.light-mode {
-    background-image: url("../Assets/Images/pokemon-go-wallpaper-pokeball.webp");
+    background-image: url("../Images/pokemon-go-wallpaper-pokeball.webp");
   }
 
 }
