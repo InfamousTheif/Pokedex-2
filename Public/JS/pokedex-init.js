@@ -4,9 +4,9 @@ const pokedexWrapper = document.querySelector("#pokedex-wrapper");
 const regionSelect = document.querySelector("#dropdown-region");
 
 async function fetchPokemon(limit, offset) {
-  const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}/`;
-  const localPokemonData = JSON.parse(localStorage.getItem(regionSelect.value)) || "";
-  console.log(localPokemonData, "Local");
+  // fetching data from server
+  const url = `http://localhost:3000/api?limit=${limit}&offset=${offset}`;
+
   try {
     const response = await fetch(url);
     if(!response.ok) {
@@ -14,33 +14,10 @@ async function fetchPokemon(limit, offset) {
     }
 
     const data = await response.json();
-    const results = data.results;
 
-    const fetchPokemon = results.map((result) => {
-      return fetch(result.url);
-    });
+    const pokemonData = data;
 
-    const pokemonResponses = await Promise.all(fetchPokemon);
-
-    if(!pokemonResponses.every(response => response.ok)) {
-      throw new Error(`HTTP error! Status:${pokemonResponses.status}`);
-    }
-
-    const pokemonData = await Promise.all(pokemonResponses.map(response => response.json()));
-
-    // Stripping the pokemonData array of the unused properties to avoid exceeding localStorage's limit.
-    const strippedData = pokemonData.map((data) => {
-      return {
-        name: data.name,
-        types: data.types,
-        sprites: data.sprites
-      }
-    });
-
-
-    localStorage.setItem(regionSelect.value, JSON.stringify(strippedData));
-
-    renderHTML(localPokemonData || strippedData);
+    renderHTML(pokemonData);
 
   } catch (err) {
     console.error("Network or parsing error:", err);

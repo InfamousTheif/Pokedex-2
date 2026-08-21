@@ -42,13 +42,49 @@ const server = http.createServer(async (req, res) => {
 
   if(req.url.includes("/Public/")) {
     try {
-      console.log(req.url)
       const file = await fsPromises.readFile(`./${req.url}`);
       res.writeHead(200, {"content-type": `${dotMimeTypes[extname]}`});
       res.end(file);
     } catch (err) {
       console.error("Error occured:", err);
     }
+  } else if (req.url.includes("/api")) {
+    try {
+      const myURL = new URL(req.url, "http://localhost:3000");
+      const limit = myURL.searchParams.get("limit");
+      const offset = myURL.searchParams.get("offset");
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+
+      if(!response.ok) {
+        throw new Error(`HTTP Error, Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const { results } = await data;
+      
+      const fetchPokemon = results.map(result => fetch(result.url));
+      const pokemonResponses = await Promise.all(fetchPokemon);
+
+      if(!pokemonResponses.every(response => response.ok)) {
+        throw new Error(`HTTP Error, Status: ${pokemonResponses.status}`);
+      }
+
+      const pokemonData = await Promise.all(pokemonResponses.map(response => response.json()));
+
+      // Stripping the pokemonData array of the unused properties to avoid exceeding localStorage's limit.
+      const strippedData = pokemonData.map((data) => {
+        return {
+          name: data.name,
+          types: data.types,
+          sprites: data.sprites
+      }});
+      res.end(JSON.stringify(strippedData));
+    } catch (err) {
+      console.error("Error occured:", err)
+    }
+  } else {
+    res.writeHead(404, {"content-type": "text/html"});
+    res.end("<h1>Page not found</h1>");
   }
 
 
