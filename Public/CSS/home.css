@@ -108,6 +108,11 @@
 body {
   font-family: "Varela Round";
   background: var(--color-body-bg);
+
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-block-size: 100svb;
 }
 
 header {
@@ -375,6 +380,12 @@ footer {
   position: relative;
   max-inline-size: 40px;
   color: light-dark(#1b1f23, white);
+}
+
+.no-result_h1 {
+  text-align: center;
+  font-size: 3rem;
+  padding-top: 20px;
 }
 
 

@@ -25,6 +25,9 @@ async function fetchPokemon(limit, offset) {
 }
 
 function renderHTML(pokemonArr) {
+  if(pokemonArr.length === 0) {
+    return pokedexWrapper.innerHTML = "<h1 class='no-result_h1'>No result</h1>"
+  }
 
   let html = pokemonArr.map((pokemon) => {
 
@@ -79,14 +82,13 @@ function typeHTMLHandler(pokemon) {
 
 function searchHandler(pokemon) {
   const unfilteredPokemon = pokemon;
-  console.log(pokemon)
   searchBar.addEventListener("keyup", (e) => {
     const filteredPokemon = unfilteredPokemon.filter((pokemon) => {
-      const name = pokemon.name.toLowerCase()
+      const name = pokemon.name.toLowerCase();
        return name.includes(searchBar.value);
     }) || unfilteredPokemon;
     renderHTML(filteredPokemon);
-  })
+  });
 }
 
 themeToggling();
