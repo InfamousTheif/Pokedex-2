@@ -66,12 +66,12 @@ const server = http.createServer(async (req, res) => {
       const pokemonResponses = await Promise.all(fetchPokemon);
 
       if(!pokemonResponses.every(response => response.ok)) {
-        throw new Error(`HTTP Error, Status: ${pokemonResponses.status}`);
+        throw new Error(`HTTP Error, Status: ${pokemonResponses[0].status}`);
       }
 
       const pokemonData = await Promise.all(pokemonResponses.map(response => response.json()));
 
-      // Stripping the pokemonData array of the unused properties to avoid exceeding localStorage's limit.
+      // Stripping the pokemonData array of the unused properties
       const strippedData = pokemonData.map((data) => {
         return {
           name: data.name,

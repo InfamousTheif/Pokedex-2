@@ -2,6 +2,7 @@ import { themeToggling } from "./theme-toggle.js";
 import { displayTopButton } from "./back-to-top.js";
 const pokedexWrapper = document.querySelector("#pokedex-wrapper");
 const regionSelect = document.querySelector("#dropdown-region");
+const searchBar = document.querySelector("#search-bar");
 
 async function fetchPokemon(limit, offset) {
   // fetching data from server
@@ -13,10 +14,9 @@ async function fetchPokemon(limit, offset) {
       throw new Error(`HTTP Error! Status:${response.status}`);
     }
 
-    const data = await response.json();
+    const pokemonData = await response.json();
 
-    const pokemonData = data;
-
+    searchHandler(pokemonData);
     renderHTML(pokemonData);
 
   } catch (err) {
@@ -25,7 +25,8 @@ async function fetchPokemon(limit, offset) {
 }
 
 function renderHTML(pokemonArr) {
-  const html = pokemonArr.map((pokemon) => {
+
+  let html = pokemonArr.map((pokemon) => {
 
     return `
       <div class="pokemon-wrapper_div">
@@ -74,6 +75,18 @@ function typeHTMLHandler(pokemon) {
     <img class="type_img" src="../type-icons/${pokemon.types[1].type.name}.avif">
     `
   }
+}
+
+function searchHandler(pokemon) {
+  const unfilteredPokemon = pokemon;
+  console.log(pokemon)
+  searchBar.addEventListener("keyup", (e) => {
+    const filteredPokemon = unfilteredPokemon.filter((pokemon) => {
+      const name = pokemon.name.toLowerCase()
+       return name.includes(searchBar.value);
+    }) || unfilteredPokemon;
+    renderHTML(filteredPokemon);
+  })
 }
 
 themeToggling();
