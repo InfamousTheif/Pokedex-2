@@ -82,7 +82,7 @@ function typeHTMLHandler(pokemon) {
 
 function searchHandler(pokemon) {
   const unfilteredPokemon = pokemon;
-  searchBar.addEventListener("keyup", (e) => {
+  searchBar.addEventListener("keyup", () => {
     const filteredPokemon = unfilteredPokemon.filter((pokemon) => {
       const name = pokemon.name.toLowerCase();
        return name.includes(searchBar.value);
