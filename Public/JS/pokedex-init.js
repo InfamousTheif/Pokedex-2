@@ -71,11 +71,11 @@ function regionHandler() {
 
 function typeHTMLHandler(pokemon) {
   if(pokemon.types.length < 2) {
-    return `<img class="type_img" src="../type-icons/${pokemon.types[0].type.name}.avif">`
+    return `<img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[0].type.name}.avif">`
   } else {
     return `
-    <img class="type_img" src="../type-icons/${pokemon.types[0].type.name}.avif">
-    <img class="type_img" src="../type-icons/${pokemon.types[1].type.name}.avif">
+    <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[0].type.name}.avif">
+    <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[1].type.name}.avif">
     `
   }
 }
