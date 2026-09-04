@@ -1,3 +1,28 @@
+/* open-sans-300 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/open-sans-v44-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/open-sans-v44-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/open-sans-v44-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
 body {
   background:  color-mix(in srgb, #31a5c2 40%, white);
   color: #333333;
@@ -6,6 +31,9 @@ body {
 main {
   padding-block: 20px;
   padding-inline: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .left-wrapper_div {
@@ -155,4 +183,93 @@ main {
 
 .evolution_img {
   inline-size: 7rem;
+}
+
+.right-wrapper_div {
+  max-inline-size: 60rem;
+  inline-size: 100%;
+  padding-block: 30px;
+  padding-inline: 20px;
+
+  color: black;
+  background: white;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-header_h1 {
+  font-size: clamp(2.2rem, 0.867rem + 6.67vw, 3.2rem);
+  margin-block-end: 20px;
+}
+
+.weaknesses-wrapper_div, .story-wrapper_div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.weaknesses_h2, .story-header_h2, .data-header_h2 {
+  font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
+}
+
+.weaknesses_div {
+  display: flex;
+  gap: 1rem;
+}
+
+.weaknesses_img {
+  max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
+}
+
+.story-copy_p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+}
+
+.data-wrapper_div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.table-wrapper_div {
+  max-inline-size: 300px;
+  inline-size: 100%;
+}
+
+.pokemon-data_table {
+  font-family: "Open Sans", sans-serif;
+  inline-size: 100%;
+
+  tbody {
+    display: block;
+    border-block-start: solid 1px black;
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: left;
+    gap: 1rem;
+
+    padding-block: 10px;
+    border-block-end: solid 1px black;
+  }
+
+
+  td {
+    color: #333333;
+
+    &:has(span) {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+  }
 }
