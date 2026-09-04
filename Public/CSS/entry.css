@@ -9,9 +9,11 @@ main {
 }
 
 .left-wrapper_div {
+  container-type: inline-size;
   max-inline-size: 50rem;
   inline-size: 100%;
-  padding-block: 30px;
+  padding-block-start: 30px;
+  padding-block-end: 35px;
   padding-inline: 20px;
 
   display: flex;
@@ -23,8 +25,35 @@ main {
   border-radius: 30px;
   box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.4);
 
-  @media (width < 643px) {
+  /* This query shifts the evolution line into a horizontal layout */
+  --arrow-gap: 2rem;
+  @container (width > 643px) {
+    .evolution-line_div {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: var(--arrow-gap);
+    }
 
+    .evolution_div {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: var(--arrow-gap);
+    }
+
+    .evolve-level {
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.1rem;
+      text-align: center;
+
+      &::before {
+        content: "→";
+        position: relative;
+        font-size: var(--arrow-size);
+      }
+    }
   }
 }
 
@@ -36,16 +65,16 @@ main {
 
 .entry-name_h1 {
   color: black;
-  font-size: 2.2rem;
+  font-size: clamp(2.2rem, 0.867rem + 6.67vw, 3.2rem);
 
   sup {
     color: #333333;
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem ,0.533rem + 3.33vw ,1.6rem);
   }
 }
 
 .type_img {
-  max-inline-size: 2.5rem;
+  max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,3rem);
 }
 
 .pokemon-img_div {
@@ -63,17 +92,24 @@ main {
 .pokemon_img {
   max-inline-size: 15rem;
   inline-size: 100%;
+
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.evolution-wrapper_div {
+  border-block-start: dashed #5e5d5d 2px;
+  padding-block-start: 20px;
 }
 
 .evolution-wrapper_h2 {
   color: black;
-  font-size: 1.8rem;
+  font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
   margin-block-end: 20px;
 }
 
 .evolution-line_div {
   display: flex;
-  /* change direction in bigger screens */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -83,7 +119,6 @@ main {
 .evolution_div {
   position: relative;
   display: flex;
-  /* change direction in bigger screens */
   flex-direction: column;
   align-items: center;
 }
@@ -92,13 +127,11 @@ main {
   --arrow-size: 4rem;
   position: relative;
   display: flex;
-  /* change direction in bigger screens */
   flex-direction: column;
   align-items: center;
   font-size: 1.1rem;
 
   &::before {
-    /* content direction in bigger screens */
     content: "↓";
     position: relative;
     font-size: var(--arrow-size);
