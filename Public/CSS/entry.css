@@ -207,22 +207,33 @@ main {
   margin-block-end: 20px;
 }
 
-.weaknesses-wrapper_div, .story-wrapper_div {
+.type-def-wrapper_div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weaknesses-wrapper_div, .resistances-wrapper_div, .story-wrapper_div {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-.weaknesses_h2, .story-header_h2, .data-header_h2 {
+.weaknesses_h2, .resistances_h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+}
+
+.story-header_h2, .data-header_h2 {
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
 }
 
-.weaknesses_div {
+.weaknesses_div, .resistances_div {
   display: flex;
   gap: 1rem;
 }
 
-.weaknesses_img {
+.weaknesses_img, .resistances_img {
   max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
 }
 
@@ -233,8 +244,7 @@ main {
 
 .data-wrapper_div {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  gap: 4rem;
 }
 
 .table-wrapper_div {
