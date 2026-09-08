@@ -199,7 +199,7 @@ main {
 
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .about-header_h1 {
@@ -207,10 +207,14 @@ main {
   margin-block-end: 20px;
 }
 
+.pokemon-data-wrapper_div {
+  border-block: dashed #5e5d5d 2px;
+  padding-block: 2rem;
+}
+
 .type-def-wrapper_div {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  gap: 10rem;
 }
 
 .weaknesses-wrapper_div, .resistances-wrapper_div, .story-wrapper_div {
@@ -224,8 +228,12 @@ main {
   font-size: 1.4rem;
 }
 
-.story-header_h2, .data-header_h2 {
+.story-header_h2, .data-header_h2, .stats-header_h2 {
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
+}
+
+.data-header_h2, .stats-header_h2 {
+  margin-bottom: 20px;
 }
 
 .weaknesses_div, .resistances_div {
@@ -280,6 +288,56 @@ main {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+    }
+  }
+}
+
+.stats_table {
+  font-family: "Open Sans", sans-serif;
+  
+  tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: 60px 50px 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  th {
+    text-align: start;
+  }
+
+  .stat-value_td {
+    font-weight: normal;
+    color: #333333;
+    text-align: end;
+  }
+
+  .stat-bar_td {
+    --bar-height: 10px;
+    --bar-radius: 20px;
+    display: block;
+    inline-size: 500px;
+    block-size: var(--bar-height);
+    border-radius: var(--bar-radius);
+    background: #a5a5a5;
+
+    .stat-bar_div {
+      --stat-red: #F04444;
+      --stat-orange: #F28C38;
+      --stat-green: #4CAF50;
+      --stat-blue: #3B9FE8;
+      --bar-width: 50%;
+      --bar-color: var(--stat-blue);
+      inline-size: var(--bar-width);
+      block-size: var(--bar-height);
+      border-radius: var(--bar-radius);
+      background: var(--bar-color);
     }
   }
 }
