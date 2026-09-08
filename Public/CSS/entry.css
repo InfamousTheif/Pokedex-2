@@ -29,7 +29,6 @@ body {
 }
 
 main {
-  
   padding-inline-start: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -41,13 +40,26 @@ main {
   inline-size: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 
   padding-block-start: 10px;
 }
 
-.back_button {
+.back_button{
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
+}
+
+.pagination-wrapper_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-inline: 20px;
+  margin-block-start: 10px;
+}
+
+.paging_a {
+  font-size: clamp(1.2rem ,0.533rem + 3.33vw ,1.6rem);
 }
 
 .pokemon-wrapper_div {
