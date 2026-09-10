@@ -29,10 +29,10 @@ body {
 }
 
 main {
-  padding-inline-start: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 5rem;
 }
 
 .left-wrapper_div {
@@ -47,6 +47,8 @@ main {
 
 .back_button{
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
+  padding-inline-start: 5px;
+  padding-block-start: 10px;
 }
 
 .pagination-wrapper_div {
@@ -75,7 +77,7 @@ main {
 
   background: white;
   border: none;
-  border-radius: 30px;
+  border-radius: calc(sign(100vw - 100%) * 30px);
   box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.4);
 
   /* This query shifts the evolution line into a horizontal layout */
@@ -113,6 +115,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  inline-size: 100%;
 }
 
 .entry-name_h1 {
@@ -150,6 +153,7 @@ main {
 }
 
 .evolution-wrapper_div {
+  inline-size: 100%;
   border-block-start: dashed #5e5d5d 2px;
   padding-block-start: 20px;
 }
@@ -211,7 +215,6 @@ main {
 }
 
 .right-wrapper_div {
-  max-inline-size: 60rem;
   inline-size: 100%;
   padding-block: 30px;
   padding-inline: 20px;
@@ -242,13 +245,13 @@ main {
   gap: 10rem;
 }
 
-.weaknesses-wrapper_div, .resistances-wrapper_div, .story-wrapper_div {
+.story-wrapper_div {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-.weaknesses_h2, .resistances_h2 {
+.resistances_h2 {
   font-family: "Open Sans", sans-serif;
   font-size: 1.4rem;
 }
@@ -261,12 +264,12 @@ main {
   margin-bottom: 20px;
 }
 
-.weaknesses_div, .resistances_div {
+.resistances_div {
   display: flex;
   gap: 1rem;
 }
 
-.weaknesses_img, .resistances_img {
+.resistances_img {
   max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
 }
 
@@ -319,6 +322,7 @@ main {
 
 .stats_table {
   font-family: "Open Sans", sans-serif;
+  inline-size: 100%;
   
   tbody {
     display: flex;
@@ -347,7 +351,7 @@ main {
     --bar-height: 10px;
     --bar-radius: 20px;
     display: block;
-    inline-size: 500px;
+    max-inline-size: 500px;
     block-size: var(--bar-height);
     border-radius: var(--bar-radius);
     background: #a5a5a5;
@@ -364,5 +368,23 @@ main {
       border-radius: var(--bar-radius);
       background: var(--bar-color);
     }
+  }
+}
+
+@media (width > 1800px) {
+  main {
+    grid-template-columns: repeat(2, 1fr);
+    padding-inline-start: 20px;
+    justify-items: normal;
+  }
+
+  .right-wrapper_div {
+    max-inline-size: 60rem;
+  }
+}
+
+@media (width > 800px) {
+  .back_button {
+    padding: 0;
   }
 }
