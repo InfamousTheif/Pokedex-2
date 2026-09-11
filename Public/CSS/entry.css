@@ -278,11 +278,6 @@ main {
   font-size: 1.4rem;
 }
 
-.data-wrapper_div {
-  display: flex;
-  gap: 4rem;
-}
-
 .table-wrapper_div {
   max-inline-size: 300px;
   inline-size: 100%;
