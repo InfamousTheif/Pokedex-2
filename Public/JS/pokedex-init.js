@@ -85,7 +85,7 @@ function searchHandler(pokemon) {
   searchBar.addEventListener("keyup", () => {
     const filteredPokemon = unfilteredPokemon.filter((pokemon) => {
       const name = pokemon.name.toLowerCase();
-       return name.includes(searchBar.value);
+       return name.includes(searchBar.value.toLowerCase());
     }) || unfilteredPokemon;
     renderHTML(filteredPokemon);
   });
