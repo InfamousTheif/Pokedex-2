@@ -236,13 +236,11 @@ main {
 }
 
 .pokemon-data-wrapper_div {
+  display: flex;
+  justify-content: space-between;
+
   border-block: dashed #5e5d5d 2px;
   padding-block: 2rem;
-}
-
-.type-def-wrapper_div {
-  display: flex;
-  gap: 10rem;
 }
 
 .story-wrapper_div {
@@ -251,12 +249,7 @@ main {
   gap: 0.6rem;
 }
 
-.resistances_h2 {
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.4rem;
-}
-
-.story-header_h2, .data-header_h2, .stats-header_h2 {
+.story-header_h2, .data-header_h2, .weak-header_h2, .resist-header_h2, .stats-header_h2 {
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
 }
 
@@ -264,13 +257,23 @@ main {
   margin-bottom: 20px;
 }
 
-.resistances_div {
+.weak-wrapper_div, .resist-wrapper_div {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
+  max-inline-size: 300px;
+  
 }
 
-.resistances_img {
-  max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
+.weak-list_ul, .resist-list_ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: 0.5rem;
+
+  img {
+    max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
+  }
 }
 
 .story-copy_p {
