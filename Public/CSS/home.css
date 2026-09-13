@@ -49,7 +49,7 @@
   );
 
   --color-header-bg: light-dark(
-    color-mix(in srgb, #A11524, #E6192E 60%),
+    color-mix(in srgb, #A11524, #ee1b24 40%),
     #5c1019
   );
 
@@ -88,7 +88,7 @@
   );
 
   --color-border-white: light-dark(
-    #ffffff,
+    #333333,
     #ffffff
   );
 
@@ -124,6 +124,7 @@ header {
   justify-items: center;
 
   background: var(--color-header-bg);
+  border-block-end: 1px solid var(--color-border-white);
   padding-block: 20px;
   padding-inline: 5px;
 
@@ -155,10 +156,10 @@ header {
   max-inline-size: 500px;
   padding-block: 10px;
   padding-inline: 7px;
-  border: solid var(--color-border-primary) 1px;
+  border: solid var(--color-border-primary) 2px;
   border-radius: 30px;
 
-  box-shadow: inset 0px 6px 25px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: inset -2px 3px 10px 2px light-dark(rgba(255, 239, 239, 0.7), rgba(0, 0, 0, 0.5));
 
   @media screen and (width > 334px) {
     padding-inline: 20px;
@@ -264,18 +265,10 @@ header {
   appearance: none;
 
   /* New arrow */
-  background-image: url("../Images/triangle.webp");
+  background-image: light-dark(url("../Images/triangle.webp"), url("../Images/triangle-w.webp"));
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 10px;
-
-  @media (prefers-color-scheme: dark) {
-    background-image: url("../Images/triangle-w.webp")
-  }
-
-  &.light-mode {
-    background-image: url("../Images/triangle.webp");
-  }
 }
 
 .pokedex-wrapper_div {
@@ -295,19 +288,10 @@ header {
   border-inline-end: solid var(--color-border-white) 2px;
   border-block: solid var(--color-border-white) 1px;
 
-  background-image: url("../Images/pokemon-go-wallpaper-pokeball.webp");
+  background-image: light-dark(url(../Images/pokemon-go-wallpaper-pokeball.webp), url(../Images/pokeball-w.webp));
   background-repeat: no-repeat;
   background-position: top 10px center;
   background-size: 10.5rem;
-
-  @media (prefers-color-scheme: dark) {
-    background-image: url("../Images/pokeball-w.webp")
-  }
-
-  &.light-mode {
-    background-image: url("../Images/pokemon-go-wallpaper-pokeball.webp");
-  }
-
 }
 
 .pokemon_img {
@@ -344,7 +328,7 @@ header {
   bottom: 10px;
   right: 15px;
   
-  padding-block: 10px;
+  padding-block: 8px;
   padding-inline: 30px;
   border: solid 2px var(--color-border-primary);
   border-radius: 30px;
@@ -355,6 +339,7 @@ header {
 
 footer {
   background: var(--color-header-bg);
+  border-block-start: 1px solid var(--color-border-white);
   padding-block: 20px;
   padding-inline: 20px;
 }
