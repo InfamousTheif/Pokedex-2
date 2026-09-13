@@ -236,11 +236,30 @@ main {
 }
 
 .pokemon-data-wrapper_div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+  "data-table"
+  "weaknesses-list"
+  "resistances-list";
+  justify-items: start;
+  gap: 2rem;
+  
 
   border-block: dashed #5e5d5d 2px;
   padding-block: 2rem;
+}
+
+.data-wrapper_div {
+  grid-area: data-table;
+}
+
+.weak-wrapper_div {
+  grid-area: weaknesses-list;
+}
+
+.resist-wrapper_div {
+  grid-area: resistances-list;
 }
 
 .story-wrapper_div {
@@ -260,16 +279,16 @@ main {
 .weak-wrapper_div, .resist-wrapper_div {
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: 1rem;
   max-inline-size: 300px;
   
 }
 
 .weak-list_ul, .resist-list_ul {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-items: center;
-  gap: 0.5rem;
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
 
   img {
     max-inline-size: clamp(2.5rem ,0.833rem + 8.33vw ,4rem);
@@ -350,6 +369,7 @@ main {
     --bar-radius: 20px;
     display: block;
     max-inline-size: 500px;
+    inline-size: 100%;
     block-size: var(--bar-height);
     border-radius: var(--bar-radius);
     background: #a5a5a5;
@@ -369,7 +389,7 @@ main {
   }
 }
 
-@media (width > 1800px) {
+@media (width > 1700px) {
   main {
     grid-template-columns: repeat(2, 1fr);
     padding-inline-start: 20px;
@@ -379,10 +399,35 @@ main {
   .right-wrapper_div {
     max-inline-size: 60rem;
   }
+
+  .pokemon-data-wrapper_div {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+    "data-table weaknesses-list resistances-list";
+    justify-items: center;
+  }
 }
 
 @media (width > 800px) {
   .back_button {
     padding: 0;
+  }
+}
+
+@media (width > 666px) {
+  .pokemon-data-wrapper_div {
+    grid-template-columns: 400px 1fr;
+    grid-template-areas: 
+    "data-table weaknesses-list"
+    "data-table resistances-list";
+    justify-items: start;
+  }
+
+  .weak-list_ul, .resist-list_ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    column-gap: 2rem;
+    row-gap: 1rem;
   }
 }
