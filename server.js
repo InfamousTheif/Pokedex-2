@@ -129,11 +129,17 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       console.error("Error occured:", err);
     }
-  } else if (req.url.includes("/api")) {
+  } else if (req.url.includes("/api?limit")) {
     try {
       await fetchPokeAPI(req, res);
     } catch (err) {
       console.error("Error occured:", err)
+    }
+  }else if(req.url.includes("/api?no")) {
+    try {
+      console.log("Entry api")
+    } catch (err) {
+      console.error("Error occured:", err);
     }
   } else {
     res.writeHead(404, {"content-type": "text/html"});

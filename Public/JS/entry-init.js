@@ -4,8 +4,18 @@ const rightWrapper = document.querySelector(".right-wrapper_div");
 const theme = localStorage.getItem("theme");
 document.body.style.colorScheme = theme;
 
+async function fetchPokemon() {
+  const response = fetch(`http://localhost:3000/api?no=${1}`)
+  if(!response.ok) {
+    throw new Error(`HTTP Error! Status:${response.status}`);
+  }
+  const data = (await response).json();
+
+  renderHTML(data)
+}
 
 function renderHTML(pokemon) {
+  console.log(pokemon)
   pokemonWrapper.innerHTML = 
   `
   <div class="entry-name_div">
@@ -193,4 +203,4 @@ function renderHTML(pokemon) {
   `;
 }
 
-renderHTML()
+fetchPokemon();
