@@ -5,6 +5,9 @@ const pokemonWrapper = document.querySelector(".pokemon-wrapper_div");
 const regionSelect = document.querySelector(".dropdown-region_select");
 
 export function themeToggling() {
+  const theme = localStorage.getItem("theme");
+  document.body.style.colorScheme = theme;
+
   document.addEventListener("click", (e) => {
     const isThemeToggle = themeToggle.contains(e.target);
     const isThemeChoices = themeChoices.contains(e.target);
@@ -33,7 +36,8 @@ export function themeToggling() {
   themeChoices.addEventListener("click", (e) => {
     e.stopPropagation;
 
-    const themeValue = e.target.dataset.theme;
-    document.body.style.colorScheme = themeValue;
+    const {theme} = e.target.dataset;
+    document.body.style.colorScheme = theme;
+    localStorage.setItem("theme", theme);
   })
 }
