@@ -68,6 +68,7 @@ async function fetchPokeAPI(req, res) {
       // Stripping the pokemonData array of the unused properties
       const strippedData = pokemonData.map((data) => {
         return {
+          id: data.id,
           name: data.name,
           types: data.types,
           sprites: data.sprites
@@ -80,6 +81,23 @@ async function fetchPokeAPI(req, res) {
     
   } catch (err) {
     console.error("Error occured:", err)
+  }
+}
+
+async function fetchEntry(req, res) {
+  try {
+    const myURL = new URL(req.url, "http://localhost:3000");
+    const pokeID = myURL.searchParams.get("id");
+    console.log(pokeID);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeID}/`);
+    if(!response.ok) {
+      throw new Error(`HTTP Error, Status:${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    return res.end(JSON.stringify(data));
+  } catch (err) {
+    console.error("Error occured:", error);
   }
 }
 
@@ -120,10 +138,10 @@ const server = http.createServer(async (req, res) => {
   };
 
   const extname = path.extname(req.url);
-
   if(req.url.includes("/Public/")) {
+    const paramLessURL = req.url.split("?")[0];
     try {
-      const file = await fsPromises.readFile(`./${req.url}`);
+      const file = await fsPromises.readFile(`./${paramLessURL}`);
       res.writeHead(200, {"content-type": `${dotMimeTypes[extname]}`});
       res.end(file);
     } catch (err) {
@@ -135,9 +153,10 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       console.error("Error occured:", err)
     }
-  }else if(req.url.includes("/api?no")) {
+  }else if(req.url.includes("/api?id")) {
     try {
       console.log("Entry api")
+      fetchEntry(req, res);
     } catch (err) {
       console.error("Error occured:", err);
     }

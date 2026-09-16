@@ -5,11 +5,14 @@ const theme = localStorage.getItem("theme");
 document.body.style.colorScheme = theme;
 
 async function fetchPokemon() {
-  const response = fetch(`http://localhost:3000/api?no=${1}`)
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  console.log(id)
+  const response = await fetch(`http://localhost:3000/api?id=${id}`)
   if(!response.ok) {
     throw new Error(`HTTP Error! Status:${response.status}`);
   }
-  const data = (await response).json();
+  const data = await response.json();
 
   renderHTML(data)
 }

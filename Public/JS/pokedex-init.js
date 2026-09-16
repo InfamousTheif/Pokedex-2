@@ -32,13 +32,17 @@ function renderHTML(pokemonArr) {
   let html = pokemonArr.map((pokemon) => {
 
     return `
-      <div class="pokemon-wrapper_div">
-        <img class="pokemon_img" src="${pokemon.sprites.front_default}">
-        <p class="pokemon-name_p">${pokemon.name}</p>
-        <div class="type-wrapper_div">
-          ${typeHTMLHandler(pokemon)}
+      
+        <div class="pokemon-wrapper_div">
+          <a href="http://localhost:3000/Public/HTML/entry.html?id=${pokemon.id}">
+            <img class="pokemon_img" src="${pokemon.sprites.front_default}">
+          </a>
+          <p class="pokemon-name_p">${pokemon.name}</p>
+          <div class="type-wrapper_div">
+            ${typeHTMLHandler(pokemon)}
+          </div>
         </div>
-      </div>
+      
     `;
   });
 

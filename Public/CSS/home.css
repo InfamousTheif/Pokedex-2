@@ -292,6 +292,12 @@ header {
   background-repeat: no-repeat;
   background-position: top 10px center;
   background-size: 10.5rem;
+
+  a {
+    max-inline-size: 10rem;
+    inline-size: 100%;
+  }
+
 }
 
 .pokemon_img {
