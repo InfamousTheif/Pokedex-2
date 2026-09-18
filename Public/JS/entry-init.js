@@ -68,10 +68,10 @@ function renderHTML(pokemon, species) {
 
   paginationWrapper.innerHTML = 
   `
-  <a class="paging_a" href="">
+  <a class="paging_a" href="http://localhost:3000/Public/HTML/entry.html?id=${((pokemon.id - 1) || 1)}">
     ← Previous
   </a>
-  <a class="paging_a" href="">
+  <a class="paging_a" href="http://localhost:3000/Public/HTML/entry.html?id=${((pokemon.id + 1) || 1025)}">
     Next →
   </a>
   `;
@@ -97,7 +97,7 @@ function renderHTML(pokemon, species) {
             </tr>
             <tr>
               <th>Species</th>
-              <td>Bubble Frog Pokemon</td>
+              <td>${generaHandler(species)}</td>
             </tr>
             <tr>
               <th>Height</th>
@@ -258,6 +258,14 @@ function flavorTextHandler(species) {
   for(const flavorText of species.flavor_text_entries) {
     if(flavorText.language.name === "en") {
       return flavorText.flavor_text
+    }
+  }
+}
+
+function generaHandler(species) {
+  for(const genus of species.genera) {
+    if(genus.language.name === "en") {
+      return genus.genus;
     }
   }
 }
