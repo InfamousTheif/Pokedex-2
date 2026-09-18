@@ -22,14 +22,14 @@ function renderHTML(pokemon) {
   pokemonWrapper.innerHTML = 
   `
   <div class="entry-name_div">
-    <h1 class="entry-name_h1">Froakie <sup>#656</sup></h1>
+    <h1 class="entry-name_h1">${pokemon.name} <sup>#${pokemon.id}</sup></h1>
     <div class="type-wrapper_div">
-      <img alt="" class="type_img" src="../type-icons/water.avif">
+      ${typeHTMLHandler(pokemon)}
     </div>
   </div>
 
   <div class="pokemon-img_div">
-    <img alt="" class="pokemon_img" src="../Images/656.png">
+    <img alt="" class="pokemon_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
   </div>
 
   <div class="evolution-wrapper_div">
@@ -38,7 +38,7 @@ function renderHTML(pokemon) {
       <div class="evolution_div">
         <div class="evolution-prev_div">
           <div class="evolution-img_div">
-            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/656.png">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
           </div>
           <p>Froakie</p>
         </div>
@@ -92,7 +92,7 @@ function renderHTML(pokemon) {
           <tbody>
             <tr>
               <th>Type</th>
-              <td>Water</td>
+              <td>${typeHTMLHandlerTable(pokemon)}</td>
             </tr>
             <tr>
               <th>Species</th>
@@ -100,17 +100,18 @@ function renderHTML(pokemon) {
             </tr>
             <tr>
               <th>Height</th>
-              <td>0.3m</td>
+              <td>${pokemon.height}m</td>
             </tr>
             <tr>
               <th>Weight</th>
-              <td>7.0kg</td>
+              <td>${pokemon.weight}kg</td>
             </tr>
             <tr>
               <th>Abilities</th>
               <td>
-                <span>1.Torrent</span>
-                <span>2.Protean (hidden)</span>
+                <ol class="abilities_ol">
+                ${abilitiesHandler(pokemon)}
+                </ol>
               </td>
             </tr>
             <tr>
@@ -160,50 +161,84 @@ function renderHTML(pokemon) {
       <tbody>
         <tr>
           <th>HP</th>
-          <td class="stat-value_td">41</td>
+          <td class="stat-value_td">${pokemon.stats[0].base_stat}</td>
           <td class="stat-bar_td">
-            <div style="--bar-width: 40%; --bar-color: #F04444;" class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[0].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
         <tr>
           <th>Attack</th>
-          <td class="stat-value_td">56</td>
+          <td class="stat-value_td">${pokemon.stats[1].base_stat}</td>
           <td class="stat-bar_td">
-            <div class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[1].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
         <tr>
           <th>Defense</th>
-          <td class="stat-value_td">40</td>
+          <td class="stat-value_td">${pokemon.stats[2].base_stat}</td>
           <td class="stat-bar_td">
-            <div class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[2].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
         <tr>
           <th>Sp. Atk</th>
-          <td class="stat-value_td">62</td>
+          <td class="stat-value_td">${pokemon.stats[3].base_stat}</td>
           <td class="stat-bar_td">
-            <div class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[3].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
         <tr>
           <th>Sp. Def</th>
-          <td class="stat-value_td">44</td>
+          <td class="stat-value_td">${pokemon.stats[4].base_stat}</td>
           <td class="stat-bar_td">
-            <div class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[4].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
         <tr>
           <th>Speed</th>
-          <td class="stat-value_td">71</td>
+          <td class="stat-value_td">${pokemon.stats[5].base_stat}</td>
           <td class="stat-bar_td">
-            <div class="stat-bar_div"></div>
+            <div style="--bar-percentage: ${((pokemon.stats[5].base_stat)/100)};" class="stat-bar_div"></div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   `;
+}
+
+function typeHTMLHandler(pokemon) {
+  if(pokemon.types.length < 2) {
+    return `<img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[0].type.name}.avif">`
+  } else {
+    return `
+    <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[0].type.name}.avif">
+    <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[1].type.name}.avif">
+    `
+  }
+}
+
+function typeHTMLHandlerTable(pokemon) {
+  if(pokemon.types.length < 2) {
+    return `<span>${pokemon.types[0].type.name}<span>`
+  } else {
+    return `
+    <span>${pokemon.types[0].type.name}<span>,
+    <span>${pokemon.types[1].type.name}</span>
+    `
+  }
+}
+
+function abilitiesHandler(pokemon) {
+  const htmlArray = [];
+  for (const ability of pokemon.abilities) {
+    if(ability.is_hidden) {
+      htmlArray.push(`<li>${ability.ability.name} <span>(hidden ability)</span></li>`);
+    } else {
+      htmlArray.push(`<li>${ability.ability.name}</li>`);
+    }
+  }
+  return htmlArray.join("");
 }
 
 fetchPokemon();

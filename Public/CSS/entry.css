@@ -121,6 +121,7 @@ main {
 .entry-name_h1 {
   color: var(--color-text-primary);
   font-size: clamp(2.2rem, 0.867rem + 6.67vw, 3.2rem);
+  text-transform: capitalize;
 
   sup {
     color: var(--color-text-secondary);
@@ -302,7 +303,7 @@ main {
 }
 
 .table-wrapper_div {
-  max-inline-size: 300px;
+  max-inline-size: 400px;
   inline-size: 100%;
 }
 
@@ -329,12 +330,19 @@ main {
 
   td {
     color: var(--color-text-secondary);
+    text-transform: capitalize;
 
     &:has(span) {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
+  }
+}
+
+.abilities_ol {
+  span {
+    font-size: 0.8rem;
   }
 }
 
@@ -368,8 +376,9 @@ main {
   .stat-bar_td {
     --bar-height: 10px;
     --bar-radius: 20px;
+    --max-width: 500px;
     display: block;
-    max-inline-size: 500px;
+    max-inline-size: var(--max-width);
     inline-size: 100%;
     block-size: var(--bar-height);
     border-radius: var(--bar-radius);
@@ -380,9 +389,9 @@ main {
       --stat-orange: #F28C38;
       --stat-green: #4CAF50;
       --stat-blue: #3B9FE8;
-      --bar-width: 50%;
-      --bar-color: var(--stat-blue);
-      inline-size: var(--bar-width);
+      --bar-percentage: 50%;
+      --bar-color: color-mix(var(--stat-green) calc(var(--bar-percentage)*100%), var(--stat-red));
+      inline-size: min(calc(var(--bar-percentage)*var(--max-width)), var(--max-width));
       block-size: var(--bar-height);
       border-radius: var(--bar-radius);
       background: var(--bar-color);
