@@ -14,11 +14,12 @@ async function fetchPokemon() {
   }
   const data = await response.json();
 
-  renderHTML(data)
+  renderHTML(data[0], data[1])
 }
 
-function renderHTML(pokemon) {
+function renderHTML(pokemon, species) {
   console.log(pokemon)
+  console.log(species)
   pokemonWrapper.innerHTML = 
   `
   <div class="entry-name_div">
@@ -80,7 +81,7 @@ function renderHTML(pokemon) {
   <div class="story-wrapper_div">
     <h2 class="story-header_h2">Pokedex Entry</h2>
     <p class="story-copy_p">
-      It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.
+      ${flavorTextHandler(species)}
     </p>
   </div>
 
@@ -100,11 +101,11 @@ function renderHTML(pokemon) {
             </tr>
             <tr>
               <th>Height</th>
-              <td>${pokemon.height}m</td>
+              <td>${pokemon.height} m</td>
             </tr>
             <tr>
               <th>Weight</th>
-              <td>${pokemon.weight}kg</td>
+              <td>${pokemon.weight} kg</td>
             </tr>
             <tr>
               <th>Abilities</th>
@@ -116,7 +117,7 @@ function renderHTML(pokemon) {
             </tr>
             <tr>
               <th>Gender</th>
-              <td>M & F</td>
+              <td>${genderHandler(species)}</td>
             </tr>
           </tbody>
         </table>
@@ -239,6 +240,26 @@ function abilitiesHandler(pokemon) {
     }
   }
   return htmlArray.join("");
+}
+
+function genderHandler(species) {
+  if(species.gender_rate === -1) {
+    return `N/A`;
+  } else if(species.gender_rate === 0) {
+    return 'Male Only';
+  } else if(species.gender_rate === 8) {
+    return 'Female Only';
+  } else {
+    return `M & F`;
+  }
+}
+
+function flavorTextHandler(species) {
+  for(const flavorText of species.flavor_text_entries) {
+    if(flavorText.language.name === "en") {
+      return flavorText.flavor_text
+    }
+  }
 }
 
 fetchPokemon();

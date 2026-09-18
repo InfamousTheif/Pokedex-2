@@ -86,18 +86,26 @@ async function fetchPokeAPI(req, res) {
 
 async function fetchEntry(req, res) {
   try {
+
+    // creating a url and retrieving the id param.
     const myURL = new URL(req.url, "http://localhost:3000");
     const pokeID = myURL.searchParams.get("id");
     console.log(pokeID);
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeID}/`);
-    if(!response.ok) {
-      throw new Error(`HTTP Error, Status:${response.status}`);
+    // Created an array of api urls, and used promise.all to make fetching more efficient.
+    const apiURLs = [`https://pokeapi.co/api/v2/pokemon/${pokeID}/`, `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`];
+    const promises = apiURLs.map( url => fetch(url));
+    const responses = await Promise.all(promises);
+    if(!responses.every(response => response.ok)) {
+      throw new Error(`HTTP Error, Status:${responses[0].status}`);
     }
-    const data = await response.json();
-    console.log(data);
-    return res.end(JSON.stringify(data));
+    const pokemon = await Promise.all(
+      responses.map(response => response.json())
+    );
+    // 0: pokemon api
+    // 1: species api
+    return res.end(JSON.stringify(pokemon));
   } catch (err) {
-    console.error("Error occured:", error);
+    console.error("Error occured:", err);
   }
 }
 
