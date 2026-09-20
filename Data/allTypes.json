@@ -203,7 +203,7 @@
     "resistances": ["grass", "fighting", "ground", "flying", "bug", "steel"]
   },"electric_water": {
       "weaknesses": ["Ground","Grass" ],
-      "resistances": ["fire", "water","Electric", "ice","Flying","Steel","Water"]
+      "resistances": ["fire", "water","Electric", "ice","Flying","steel","Water"]
     },
   "electric_poison": {
     "weaknesses": ["ground", "psychic"],
@@ -432,5 +432,13 @@
   "poison_ground": {
     "weaknesses": ["water", "ice" ,"ground", "psychic"],
     "resistances": ["electric", "fighting", "fairy", "poison", "bug", "rock"]
+  },
+  "fire_water": {
+    "weaknesses": ["electric", "ground", "rock"],
+    "resistances": ["fire", "water", "ice", "bug", "steel", "fairy"]
+  },
+  "water_fire": {
+    "weaknesses": ["electric", "ground", "rock"],
+    "resistances": ["fire", "water", "ice", "bug", "steel", "fairy"]
   }
 }

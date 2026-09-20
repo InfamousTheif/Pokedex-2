@@ -1,14 +1,16 @@
-import * as TypeData from "../../Data/allTypes.json" with {type: "json"};
+import typeData from "../../Data/allTypes.json" with {type: "json"};
+const theme = localStorage.getItem("theme");
+document.body.style.colorScheme = theme;
 const pokemonWrapper = document.querySelector(".pokemon-wrapper_div");
 const paginationWrapper = document.querySelector(".pagination-wrapper_div");
 const rightWrapper = document.querySelector(".right-wrapper_div");
-const theme = localStorage.getItem("theme");
-document.body.style.colorScheme = theme;
+const weaknessList = document.querySelector(".weak-list_ul");
+const resistanceList = document.querySelector(".resist-list_ul");
+
 
 async function fetchPokemon() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
-  console.log(id)
   const response = await fetch(`http://localhost:3000/api?id=${id}`)
   if(!response.ok) {
     throw new Error(`HTTP Error! Status:${response.status}`);
@@ -21,6 +23,7 @@ async function fetchPokemon() {
 function renderHTML(pokemon, species) {
   console.log(pokemon)
   console.log(species)
+  const typeChart = getMultipliers(pokemon.types);
   pokemonWrapper.innerHTML = 
   `
   <div class="entry-name_div">
@@ -128,30 +131,14 @@ function renderHTML(pokemon, species) {
     <div class="weak-wrapper_div">
       <h2 class="weak-header_h2">Weaknesses</h2>
       <ul class="weak-list_ul">
-        <li>
-          <img alt="" src="../type-icons/electric.avif">
-        </li>
-        <li>
-          <img alt="" src="../type-icons/grass.avif">
-        </li>
+      ${typeChart[0]}
       </ul>
     </div>
 
     <div class="resist-wrapper_div">
       <h2 class="resist-header_h2">Resistances</h2>
       <ul class="resist-list_ul">
-        <li>
-          <img alt="" src="../type-icons/fire.avif">
-        </li>
-        <li>
-          <img alt="" src="../type-icons/water.avif">
-        </li>
-        <li>
-          <img alt="" src="../type-icons/ice.avif">
-        </li>
-        <li>
-          <img alt="" src="../type-icons/steel.avif">
-        </li>
+      ${typeChart[1]}
       </ul>
     </div>
 
@@ -269,6 +256,73 @@ function generaHandler(species) {
       return genus.genus;
     }
   }
+}
+
+function getMultipliers(types){
+  // Getting the name of each type from the result of the PokeApi
+  const type1 = types[0].type.name;
+  const type2 = types[1]?.type.name;
+
+  const singleType = typeData[type1] // retreiving data from allTypes.json file
+  const dualType = typeData[`${type1}_${type2}`]
+  const dualType2 = typeData[`${type2}_${type1}`] // creating two dual types because some pokemon are listed fire-dark, while others dark-fire
+                                                  // e.g Houndoom and Incineroar
+  // Arrays to hold the <li><li> elements of each list
+  const weakArray = [];
+  const resistArray = [];
+
+  // utilising if conditions to determine if a pokemon is single type, or not, before listing weaknesses and resistances
+  // check what the decoding attr does to imgs
+  if(!type2){
+    for(const weakness of singleType.weaknesses ){
+      weakArray.push(
+        `<li>
+        <img alt="${weakness}" src="../type-icons/${weakness}.avif">
+        </li>`
+      );
+     }
+    
+     for(const resistance of singleType.resistances ){
+      resistArray.push( 
+        `<li>
+        <img alt="${resistance}" src="../type-icons/${resistance}.avif">
+        </li>`
+      );
+     }
+  }else if(dualType){
+    for(const weakness of dualType.weaknesses ){
+      weakArray.push(
+        `<li>
+        <img alt="${weakness}" src="../type-icons/${weakness}.avif">
+        </li>`
+      );
+     }
+    
+     for(const resistance of dualType.resistances ){
+      resistArray.push( 
+        `<li>
+        <img alt="${resistance}" src="../type-icons/${resistance}.avif">
+        </li>`
+      );
+     }
+  }else if(dualType2){
+    for(const weakness of dualType2.weaknesses ){
+      weakArray.push(
+        `<li>
+        <img alt="${weakness}" src="../type-icons/${weakness}.avif">
+        </li>`
+      );
+     }
+    
+     for(const resistance of dualType2.resistances ){
+      resistArray.push( 
+        `<li>
+        <img alt="${resistance}" src="../type-icons/${resistance}.avif">
+        </li>`
+      );
+     }
+  }
+  return [weakArray.join(""), resistArray.join("")];
 }
 
 fetchPokemon();
