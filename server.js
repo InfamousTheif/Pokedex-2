@@ -161,10 +161,18 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       console.error("Error occured:", err)
     }
-  }else if(req.url.includes("/api?id")) {
+  } else if(req.url.includes("/api?id")) {
     try {
       console.log("Entry api")
       fetchEntry(req, res);
+    } catch (err) {
+      console.error("Error occured:", err);
+    }
+  } else if(req.url.includes("Data")) {
+    try {
+      const data = await fsPromises.readFile(`./${req.url}`);
+      res.writeHead(200, {"content-type": `${dotMimeTypes[extname]}`});
+      res.end(data);
     } catch (err) {
       console.error("Error occured:", err);
     }

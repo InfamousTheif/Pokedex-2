@@ -1,3 +1,4 @@
+import * as TypeData from "../../Data/allTypes.json" with {type: "json"};
 const pokemonWrapper = document.querySelector(".pokemon-wrapper_div");
 const paginationWrapper = document.querySelector(".pagination-wrapper_div");
 const rightWrapper = document.querySelector(".right-wrapper_div");
