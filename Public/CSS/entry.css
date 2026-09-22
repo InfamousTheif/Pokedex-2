@@ -222,6 +222,7 @@ main {
 
 .right-wrapper_div {
   inline-size: 100%;
+  min-block-size: 100vb;
   padding-block: 30px;
   padding-inline: 20px;
 
