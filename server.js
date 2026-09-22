@@ -90,7 +90,6 @@ async function fetchEntry(req, res) {
     // creating a url and retrieving the id param.
     const myURL = new URL(req.url, "http://localhost:3000");
     const pokeID = myURL.searchParams.get("id");
-    console.log(pokeID);
     // Created an array of api urls, and used promise.all to make fetching more efficient.
     const apiURLs = [`https://pokeapi.co/api/v2/pokemon/${pokeID}/`, `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`];
     const promises = apiURLs.map( url => fetch(url));
@@ -107,7 +106,25 @@ async function fetchEntry(req, res) {
     if(!response.ok) {
       throw new Error(`HTTP Error, status:${response.status}`);
     }
-    const evoData = await response.json();
+    // the result of fetching the evo-chain url, and getting the url of each evo in the chain
+    const evoChain = await response.json();
+    const base = evoChain.chain.species.url;
+    const evo_1 = evoChain.chain.evolves_to[0]?.species.url;
+    const evo_2 = evoChain.chain.evolves_to[0]?.evolves_to[0]?.species.url;
+
+    // fetching the data of each evo in the evo chain
+    const evoUrls = [base, evo_1, evo_2];
+    // filtering null urls before using map.
+    const evoPromises = evoUrls.filter(url => url !== undefined).map(url => fetch(url));
+    const evoRespones = await Promise.all(evoPromises);
+    if(!evoRespones.every(response => response.ok)) {
+      throw new Error(`HTTP Error, status:${responses[0].status}`);
+    }
+
+    const evoData = await Promise.all(
+      evoRespones.map(response => response.json())
+    );
+    
     // 0: pokemon api
     // 1: species api
     // 2: evoluion-chain api
