@@ -17,12 +17,13 @@ async function fetchPokemon() {
   }
   const data = await response.json();
 
-  renderHTML(data[0], data[1])
+  renderHTML(data[0], data[1], data[2]);
 }
 
-function renderHTML(pokemon, species) {
-  console.log(pokemon)
-  console.log(species)
+function renderHTML(pokemon, species, evoChain) {
+  console.log(pokemon);
+  console.log(species);
+  console.log(evoChain);
   const typeChart = getMultipliers(pokemon.types);
   pokemonWrapper.innerHTML = 
   `
@@ -40,32 +41,7 @@ function renderHTML(pokemon, species) {
   <div class="evolution-wrapper_div">
     <h2 class="evolution-wrapper_h2">Evolutions</h2>
     <div class="evolution-line_div">
-      <div class="evolution_div">
-        <div class="evolution-prev_div">
-          <div class="evolution-img_div">
-            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
-          </div>
-          <p>Froakie</p>
-        </div>
-        <p class="evolve-level">Level 16</p>
-      </div>
-      <div class="evolution_div">
-        <div class="evolution-prev_div">
-          <div class="evolution-img_div">
-            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/657.png">
-          </div>
-          <p>Frogadier</p>
-        </div>
-        <p class="evolve-level">Level 36</p>
-      </div>
-      <div class="evolution_div">
-        <div class="evolution-prev_div">
-          <div class="evolution-img_div">
-            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png">
-          </div>
-          <p>Greninja</p>
-        </div>
-      </div>
+      ${getEvoChain(evoChain, pokemon.id, pokemon.name)}
     </div>
   </div>
   `;
@@ -323,6 +299,100 @@ function getMultipliers(types){
      }
   }
   return [weakArray.join(""), resistArray.join("")];
+}
+
+function getEvoChain(evoChain, pokeID, pokeName) {
+  const base = evoChain.chain.species.name;
+  const evo_1 = evoChain.chain.evolves_to[0]?.species.name;
+  const evo_2 = evoChain.chain.evolves_to[0]?.evolves_to[0]?.species.name;
+  if(evo_1 && evo_2) {
+    // addend is used to adjust the number added to pokeID in the following urls, so that the right sprite loads.
+    // if the current pokemon is first on the evo chain, e.g:
+      // Bulbasaur id= pokeID(1) + addend(0) = 1.
+      // Ivysaur id = pokeID(1) + addend(0) + 1 = 2
+      // Venasaur id= pokeID(1) + addend(0) + 2 = 3.
+    let addend = 0;
+    if(pokeName === evo_1) {
+      // if the current pokemon is second on the evo chain, e.g:
+      // Bulbasaur id= pokeID(2) + addend(-1)= 1.
+      // Ivysaur id = pokeID(2) + addend(-1) + 1 = 2
+      // Venasaur id= pokeID(2) + addend(-1) + 2 = 3.
+      addend = -1;
+    } else if(pokeName === evo_2) {
+      // if the current pokemon is third on the evo chain, e.g:
+      // Bulbasaur id = pokeID(3) + addend(-2) = 1
+      // Ivysaur id = pokeID(3) + addend(-2) + 1 = 2
+      // Venasaur id= pokeID(3) + addend(-2) + 2 = 3.
+      addend = -2
+    } 
+    console.log(addend)
+    return `
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID + addend}.png">
+          </div>
+          <p>${base}</p>
+        </div>
+        <p class="evolve-level"></p>
+      </div>
+
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID + addend + 1}.png">
+          </div>
+          <p>${evo_1}</p>
+        </div>
+        <p class="evolve-level"></p>
+      </div>
+      
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID + addend + 2}.png">
+          </div>
+          <p>${evo_2}</p>
+        </div>
+      </div>
+      `
+  } else if (evo_1 && !evo_2) {
+    let addend = 0; 
+    if(pokeName === evo_1) {
+      addend = -1;
+    }
+    return `
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID + addend}.png">
+          </div>
+          <p>${base}</p>
+        </div>
+        <p class="evolve-level"></p>
+      </div>
+
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID + addend + 1}.png">
+          </div>
+          <p>${evo_1}</p>
+        </div>
+      </div>
+      `
+  } else {
+    return `
+      <div class="evolution_div">
+        <div class="evolution-prev_div">
+          <div class="evolution-img_div">
+            <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeID}.png">
+          </div>
+          <p>${base}</p>
+        </div>
+      </div>
+      `
+  }
 }
 
 fetchPokemon();

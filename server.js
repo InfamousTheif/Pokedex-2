@@ -96,13 +96,22 @@ async function fetchEntry(req, res) {
     const promises = apiURLs.map( url => fetch(url));
     const responses = await Promise.all(promises);
     if(!responses.every(response => response.ok)) {
-      throw new Error(`HTTP Error, Status:${responses[0].status}`);
+      throw new Error(`HTTP Error, status:${responses[0].status}`);
     }
     const pokemon = await Promise.all(
       responses.map(response => response.json())
     );
+    
+    // Fetching evolution chain data using the results of the species fetch
+    const response = await fetch(pokemon[1].evolution_chain.url);
+    if(!response.ok) {
+      throw new Error(`HTTP Error, status:${response.status}`);
+    }
+    const evoData = await response.json();
     // 0: pokemon api
     // 1: species api
+    // 2: evoluion-chain api
+    pokemon.push(evoData);
     return res.end(JSON.stringify(pokemon));
   } catch (err) {
     console.error("Error occured:", err);
