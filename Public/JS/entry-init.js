@@ -1,4 +1,5 @@
 import typeData from "../../Data/allTypes.json" with {type: "json"};
+import { goToDex } from "./back-to-dex.js";
 const theme = localStorage.getItem("theme");
 document.body.style.colorScheme = theme;
 const pokemonWrapper = document.querySelector(".pokemon-wrapper_div");
@@ -407,4 +408,5 @@ function getEvoChain(evoChain, pokeID, pokeName) {
   }
 }
 
+goToDex();
 fetchPokemon();
