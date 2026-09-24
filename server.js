@@ -129,7 +129,43 @@ async function fetchEntry(req, res) {
     // 1: species api
     // 2: evoluion-chain api
     pokemon.push(evoData);
-    return res.end(JSON.stringify(pokemon));
+    // filtering the pokemon array of any useless data, before sending it to the client side
+    const filteredPokemon = pokemon.map((arrays) => {
+      return [
+        {
+          id: pokemon[0].id,
+          name: pokemon[0].name,
+          height: pokemon[0].height,
+          weight: pokemon[0].weight,
+          types: pokemon[0].types,
+          abilities: pokemon[0].abilities,
+          stats: pokemon[0].stats,
+        },
+
+        {
+          gender_rate: pokemon[1].gender_rate,
+          genera: pokemon[1].genera,
+          flavor_text_entries: pokemon[1].flavor_text_entries
+        },
+        
+        [
+          {
+            id: pokemon[2][0].id,
+            name: pokemon[2][0].name
+          },
+          {
+            id: pokemon[2]?.[1]?.id ?? null,
+            name: pokemon[2]?.[1]?.name ?? null
+          },
+          {
+            id: pokemon[2]?.[2]?.id ?? null,
+            name: pokemon[2]?.[2]?.name ?? null
+          }
+        ]
+      ];
+    });
+    //  a zero is used because I had to return the filtered data as an array, into an array(filteredPokemon)
+    return res.end(JSON.stringify(filteredPokemon[0]));
   } catch (err) {
     console.error("Error occured:", err);
   }
@@ -173,6 +209,7 @@ const server = http.createServer(async (req, res) => {
 
   const extname = path.extname(req.url);
   if(req.url.includes("/Public/")) {
+    // Removing the paramters after the ? in the url, so that readfile reads the actual file.
     const paramLessURL = req.url.split("?")[0];
     try {
       const file = await fsPromises.readFile(`./${paramLessURL}`);

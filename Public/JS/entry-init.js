@@ -17,14 +17,12 @@ async function fetchPokemon() {
     throw new Error(`HTTP Error! Status:${response.status}`);
   }
   const data = await response.json();
+  console.log(data);
 
   renderHTML(data[0], data[1], data[2]);
 }
 
 function renderHTML(pokemon, species, evoChain) {
-  console.log(pokemon);
-  console.log(species);
-  console.log(evoChain);
   const typeChart = getMultipliers(pokemon.types);
   pokemonWrapper.innerHTML = 
   `
@@ -306,7 +304,7 @@ function getEvoChain(evoChain) {
   const base = evoChain[0];
   const evo_1 = evoChain[1]
   const evo_2 = evoChain[2]
-  if(evo_1 && evo_2) {
+  if(evo_1.id && evo_2.id) {
     return `
       <div class="evolution_div">
         <div class="evolution-prev_div">
@@ -343,7 +341,7 @@ function getEvoChain(evoChain) {
         </div>
       </div>
       `
-  } else if (evo_1 && !evo_2) {
+  } else if (evo_1.id && !evo_2.id) {
     return `
       <div class="evolution_div">
         <div class="evolution-prev_div">
