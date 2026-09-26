@@ -67,8 +67,12 @@ function regionHandler() {
     Paldea:  [905, 120]   // #906 to #1025 (120 Pokémon including DLC expansions)
   };
 
+  const region1 = JSON.parse(localStorage.getItem("region"));
+  console.log(region1)
+  const regionName = Object.keys(regions).find(key => JSON.stringify(regions[key]) === JSON.stringify(region1)) || Kanto;
   regionSelect.addEventListener("change", (e) => {
     const region = regions[e.target.value];
+    localStorage.setItem("region", JSON.stringify(region));
     fetchPokemon(region[1], region[0]);
   });
 }
@@ -95,7 +99,12 @@ function searchHandler(pokemon) {
   });
 }
 
+// Recieving last selected region, to be the base region, when the user comes back to this
+const region = JSON.parse(localStorage.getItem("region"));
+const offset = region?.[0] || 0;
+const limit = region?.[1] || 151;
+
 themeToggling();
 displayTopButton();
 regionHandler();
-fetchPokemon(151, 0);
+fetchPokemon(limit, offset);
