@@ -106,7 +106,7 @@ async function fetchEntry(req, res) {
     if(!response.ok) {
       throw new Error(`HTTP Error, status:${response.status}`);
     }
-    // the result of fetching the evo-chain url, and getting the url of each evo in the chain
+    // Using the result of fetching the evo-chain url, to get the url of each evo in the chain
     const evoChain = await response.json();
     const base = evoChain.chain.species.url;
     const evo_1 = evoChain.chain.evolves_to[0]?.species.url;
@@ -164,7 +164,7 @@ async function fetchEntry(req, res) {
         ]
       ];
     });
-    //  a zero is used because I had to return the filtered data as an array, into an array(filteredPokemon)
+    //  a zero is used because filteredPokemon is an array, and the 0th value stores the data I want.
     return res.end(JSON.stringify(filteredPokemon[0]));
   } catch (err) {
     console.error("Error occured:", err);
@@ -226,7 +226,6 @@ const server = http.createServer(async (req, res) => {
     }
   } else if(req.url.includes("/api?id")) {
     try {
-      console.log("Entry api")
       fetchEntry(req, res);
     } catch (err) {
       console.error("Error occured:", err);
