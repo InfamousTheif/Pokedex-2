@@ -69,7 +69,7 @@ function regionHandler() {
 
   // comparing the value of the items in the regions obj and the value of region1, to get the name of the region stored in localStorage
   const region1 = JSON.parse(localStorage.getItem("region"));
-  const regionName = Object.keys(regions).find(key => JSON.stringify(regions[key]) === JSON.stringify(region1)) || Kanto;
+  const regionName = Object.keys(regions).find(key => JSON.stringify(regions[key]) === JSON.stringify(region1)) || "Kanto";
   regionSelect.value = regionName;
   regionSelect.addEventListener("change", (e) => {
     const region = regions[e.target.value];
