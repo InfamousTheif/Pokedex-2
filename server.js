@@ -172,7 +172,6 @@ async function fetchEntry(req, res) {
 }
 
 const server = http.createServer(async (req, res) => {
-
   const dotMimeTypes = {
     // Base web languages
     ".html": "text/html",
@@ -222,7 +221,7 @@ const server = http.createServer(async (req, res) => {
     try {
       await fetchPokeAPI(req, res);
     } catch (err) {
-      console.error("Error occured:", err)
+      console.error("Error occured:", err);
     }
   } else if(req.url.includes("/api?id")) {
     try {
@@ -249,5 +248,5 @@ const server = http.createServer(async (req, res) => {
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-    console.log("Server is running at http://localhost:3000/Public/HTML/index.html");
+    console.log(`Server is running at port http://localhost:${port}/Public/HTML/index.html`);
 });
