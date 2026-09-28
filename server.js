@@ -205,7 +205,7 @@ const server = http.createServer(async (req, res) => {
     ".woff": "font/woff",
     ".ttf": "font/ttf"
   };
-
+  console.log(req.url)
   const extname = path.extname(req.url);
   if(req.url.includes("/Public/")) {
     // Removing the paramters after the ? in the url, so that readfile reads the actual file.
@@ -234,6 +234,21 @@ const server = http.createServer(async (req, res) => {
       const data = await fsPromises.readFile(`./${req.url}`);
       res.writeHead(200, {"content-type": `${dotMimeTypes[extname]}`});
       res.end(data);
+    } catch (err) {
+      console.error("Error occured:", err);
+    }
+  } else if(req.url.includes("/")) {
+    try {
+      let file;
+      if(req.url === "/") {
+        file = await fsPromises.readFile("./Public/HTML/index.html");
+        res.writeHead(200, {"content-type": "text/html"});
+      }else {
+        file = await fsPromises.readFile(`./Public/${req.url}`);
+        res.writeHead(200, {"content-type": `${dotMimeTypes[extname]}`});
+      }
+      
+      res.end(file);
     } catch (err) {
       console.error("Error occured:", err);
     }
