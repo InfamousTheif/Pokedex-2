@@ -246,6 +246,8 @@ const server = http.createServer(async (req, res) => {
 
 });
 
-server.listen(3000, () => {
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
     console.log("Server is running at http://localhost:3000/Public/HTML/index.html");
 });
