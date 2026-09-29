@@ -34,7 +34,7 @@ function renderHTML(pokemonArr) {
     return `
       
         <div class="pokemon-wrapper_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${pokemon.id}">
+          <a href="/Public/HTML/entry.html?id=${pokemon.id}">
             <img class="pokemon_img" src="${pokemon.sprites.front_default}">
           </a>
           <p class="pokemon-name_p">${pokemon.name}</p>

@@ -40,7 +40,7 @@ const {get, set, clear} = cache(10);
 async function fetchPokeAPI(req, res) {
   try {
     // creating a complete URL using my scheme and the rest of the url
-    const myURL = new URL(req.url, "http://localhost:3000");
+    const myURL = new URL(req.url, `https://${req.headers.host}`);
     const limit = myURL.searchParams.get("limit");
     const offset = myURL.searchParams.get("offset");
 
@@ -88,7 +88,7 @@ async function fetchEntry(req, res) {
   try {
 
     // creating a url and retrieving the id param.
-    const myURL = new URL(req.url, "http://localhost:3000");
+    const myURL = new URL(req.url, `https://${req.headers.host}`);
     const pokeID = myURL.searchParams.get("id");
     // Created an array of api urls, and used promise.all to make fetching more efficient.
     const apiURLs = [`https://pokeapi.co/api/v2/pokemon/${pokeID}/`, `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`];
@@ -262,5 +262,5 @@ const server = http.createServer(async (req, res) => {
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-    console.log(`Server is running at port http://localhost:${port}/Public/HTML/index.html`);
+    console.log(`Server is running at port ${port}`);
 });

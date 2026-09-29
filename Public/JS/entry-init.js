@@ -47,10 +47,10 @@ function renderHTML(pokemon, species, evoChain) {
 
   paginationWrapper.innerHTML = 
   `
-  <a class="paging_a" href="http://localhost:3000/Public/HTML/entry.html?id=${((pokemon.id - 1) || 1)}">
+  <a class="paging_a" href="/Public/HTML/entry.html?id=${((pokemon.id - 1) || 1)}">
     ← Previous
   </a>
-  <a class="paging_a" href="http://localhost:3000/Public/HTML/entry.html?id=${((pokemon.id + 1) || 1025)}">
+  <a class="paging_a" href="/Public/HTML/entry.html?id=${((pokemon.id + 1) || 1025)}">
     Next →
   </a>
   `;
@@ -308,7 +308,7 @@ function getEvoChain(evoChain) {
     return `
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${base.id}">
+          <a href="/Public/HTML/entry.html?id=${base.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${base.id}.png">
             </div>
@@ -320,7 +320,7 @@ function getEvoChain(evoChain) {
 
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${evo_1.id}">
+          <a href="/Public/HTML/entry.html?id=${evo_1.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo_1.id}.png">
             </div>
@@ -332,7 +332,7 @@ function getEvoChain(evoChain) {
       
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${evo_2.id}">
+          <a href="/Public/HTML/entry.html?id=${evo_2.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo_2.id}.png">
             </div>
@@ -345,7 +345,7 @@ function getEvoChain(evoChain) {
     return `
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${base.id}">
+          <a href="/Public/HTML/entry.html?id=${base.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${base.id}.png">
             </div>
@@ -357,7 +357,7 @@ function getEvoChain(evoChain) {
 
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${evo_1.id}">
+          <a href="/Public/HTML/entry.html?id=${evo_1.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo_1.id}.png">
             </div>
@@ -370,7 +370,7 @@ function getEvoChain(evoChain) {
     return `
       <div class="evolution_div">
         <div class="evolution-prev_div">
-          <a href="http://localhost:3000/Public/HTML/entry.html?id=${base.id}">
+          <a href="/Public/HTML/entry.html?id=${base.id}">
             <div class="evolution-img_div">
               <img alt="" class="evolution_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${base.id}.png">
             </div>
