@@ -329,6 +329,7 @@ header {
 }
 
 .back-to-top_button {
+  cursor: pointer;
   display: none;
   position: fixed;
   bottom: 10px;

@@ -12,7 +12,7 @@ const resistanceList = document.querySelector(".resist-list_ul");
 async function fetchPokemon() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
-  const response = await fetch(`http://localhost:3000/api?id=${id}`)
+  const response = await fetch(`/api?id=${id}`)
   if(!response.ok) {
     throw new Error(`HTTP Error! Status:${response.status}`);
   }

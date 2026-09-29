@@ -205,7 +205,6 @@ const server = http.createServer(async (req, res) => {
     ".woff": "font/woff",
     ".ttf": "font/ttf"
   };
-  console.log(req.url)
   const extname = path.extname(req.url);
   if(req.url.includes("/Public/")) {
     // Removing the paramters after the ? in the url, so that readfile reads the actual file.

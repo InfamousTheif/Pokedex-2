@@ -46,6 +46,7 @@ main {
 }
 
 .back_button{
+  cursor: pointer;
   font-size: clamp(1.8rem ,0.533rem + 3.33vw ,2.2rem);
   padding-inline-start: 5px;
   padding-block-start: 10px;

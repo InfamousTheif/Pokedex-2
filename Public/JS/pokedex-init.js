@@ -6,7 +6,7 @@ const searchBar = document.querySelector("#search-bar");
 
 async function fetchPokemon(limit, offset) {
   // fetching data from server
-  const url = `http://localhost:3000/api?limit=${limit}&offset=${offset}`;
+  const url = `/api?limit=${limit}&offset=${offset}`;
 
   try {
     const response = await fetch(url);
