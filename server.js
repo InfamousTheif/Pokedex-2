@@ -130,42 +130,38 @@ async function fetchEntry(req, res) {
     // 2: evoluion-chain api
     pokemon.push(evoData);
     // filtering the pokemon array of any useless data, before sending it to the client side
-    const filteredPokemon = pokemon.map((arrays) => {
-      return [
+    const filteredPokemon = [
+      {
+        id: pokemon[0].id,
+        name: pokemon[0].name,
+        height: pokemon[0].height,
+        weight: pokemon[0].weight,
+        types: pokemon[0].types,
+        abilities: pokemon[0].abilities,
+        stats: pokemon[0].stats,
+      },
+      {
+        gender_rate: pokemon[1].gender_rate,
+        genera: pokemon[1].genera,
+        flavor_text_entries: pokemon[1].flavor_text_entries
+      },
+      [
         {
-          id: pokemon[0].id,
-          name: pokemon[0].name,
-          height: pokemon[0].height,
-          weight: pokemon[0].weight,
-          types: pokemon[0].types,
-          abilities: pokemon[0].abilities,
-          stats: pokemon[0].stats,
+          id: pokemon[2][0]?.id ?? null,
+          name: pokemon[2][0]?.name ?? null
         },
-
         {
-          gender_rate: pokemon[1].gender_rate,
-          genera: pokemon[1].genera,
-          flavor_text_entries: pokemon[1].flavor_text_entries
+          id: pokemon[2]?.[1]?.id ?? null,
+          name: pokemon[2]?.[1]?.name ?? null
         },
-        
-        [
-          {
-            id: pokemon[2][0].id,
-            name: pokemon[2][0].name
-          },
-          {
-            id: pokemon[2]?.[1]?.id ?? null,
-            name: pokemon[2]?.[1]?.name ?? null
-          },
-          {
-            id: pokemon[2]?.[2]?.id ?? null,
-            name: pokemon[2]?.[2]?.name ?? null
-          }
-        ]
-      ];
-    });
+        {
+          id: pokemon[2]?.[2]?.id ?? null,
+          name: pokemon[2]?.[2]?.name ?? null
+        }
+      ]
+    ];
     //  a zero is used because filteredPokemon is an array, and the 0th value stores the data I want.
-    return res.end(JSON.stringify(filteredPokemon[0]));
+    return res.end(JSON.stringify(filteredPokemon));
   } catch (err) {
     console.error("Error occured:", err);
   }
@@ -224,7 +220,7 @@ const server = http.createServer(async (req, res) => {
     }
   } else if(req.url.includes("/api?id")) {
     try {
-      fetchEntry(req, res);
+      await fetchEntry(req, res);
     } catch (err) {
       console.error("Error occured:", err);
     }
