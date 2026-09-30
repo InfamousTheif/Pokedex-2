@@ -4,6 +4,8 @@ const pokedexWrapper = document.querySelector("#pokedex-wrapper");
 const regionSelect = document.querySelector("#dropdown-region");
 const searchBar = document.querySelector("#search-bar");
 
+let currentPokemonList = [];
+
 async function fetchPokemon(limit, offset) {
   // fetching data from server
   const url = `/api?limit=${limit}&offset=${offset}`;
@@ -14,10 +16,9 @@ async function fetchPokemon(limit, offset) {
       throw new Error(`HTTP Error! Status:${response.status}`);
     }
 
-    const pokemonData = await response.json();
+    currentPokemonList = await response.json();
 
-    searchHandler(pokemonData);
-    renderHTML(pokemonData);
+    renderHTML(currentPokemonList);
 
   } catch (err) {
     console.error("Network or parsing error:", err);
@@ -84,21 +85,18 @@ function typeHTMLHandler(pokemon) {
   } else {
     return `
     <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[0].type.name}.avif">
-    <img class="type_img" alt="${pokemon.types[0].type.name}" src="../type-icons/${pokemon.types[1].type.name}.avif">
+    <img class="type_img" alt="${pokemon.types[1].type.name}" src="../type-icons/${pokemon.types[1].type.name}.avif">
     `
   }
 }
 
-function searchHandler(pokemon) {
-  const unfilteredPokemon = pokemon;
-  searchBar.addEventListener("keyup", () => {
-    const filteredPokemon = unfilteredPokemon.filter((pokemon) => {
-      const name = pokemon.name.toLowerCase();
-       return name.includes(searchBar.value.toLowerCase());
-    }) || unfilteredPokemon;
-    renderHTML(filteredPokemon);
+searchBar.addEventListener("input", () => {
+  const query = searchBar.value.toLowerCase();
+  const filteredPokemon = currentPokemonList.filter((pokemon) => {
+    return pokemon.name.toLowerCase().includes(query);
   });
-}
+  renderHTML(filteredPokemon);
+});
 
 // Last selected region, will be the one the user sees upon coming back to this page via refresh or links.
 // The region value stored in the localStorage is used to make this work.
