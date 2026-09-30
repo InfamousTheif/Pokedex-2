@@ -72,10 +72,10 @@ function regionHandler() {
   const region1 = JSON.parse(localStorage.getItem("region"));
   const regionName = Object.keys(regions).find(key => JSON.stringify(regions[key]) === JSON.stringify(region1)) || "Kanto";
   regionSelect.value = regionName;
-  regionSelect.addEventListener("change", (e) => {
+  regionSelect.addEventListener("change", async (e) => {
     const region = regions[e.target.value];
     localStorage.setItem("region", JSON.stringify(region));
-    fetchPokemon(region[1], region[0]);
+    await fetchPokemon(region[1], region[0]);
   });
 }
 
@@ -107,4 +107,4 @@ const limit = region?.[1] || 151;
 themeToggling();
 displayTopButton();
 regionHandler();
-fetchPokemon(limit, offset);
+await fetchPokemon(limit, offset);
