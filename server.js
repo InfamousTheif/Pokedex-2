@@ -75,25 +75,24 @@ async function fetchPokeAPI(req, res, batchSize) {
         // Pushes the batches into an array
         pokemonData.push(await Promise.all(pokemonResponses.map(response => response.json())));
         console.log(pokemonData.length);
-
-        // Stripping the pokemonData array of the unused properties
-        // flat is used to "flatten" the nested arrays into one array
-        // e.g, [[1,2], [3,4], [5,6]] --> [1,2,3,4,5,6]
-        strippedData = pokemonData.flat().map((data) => {
-          return {
-            id: data.id,
-            name: data.name,
-            types: data.types,
-            sprites: data.sprites
-        }});
       }
   
+      // Stripping the pokemonData array of the unused properties
+      // flat is used to "flatten" the nested arrays into one array
+      // e.g, [[1,2], [3,4], [5,6]] --> [1,2,3,4,5,6]
+      strippedData = pokemonData.flat().map((data) => {
+        return {
+          id: data.id,
+          name: data.name,
+          types: data.types,
+          sprites: data.sprites
+      }});
       set(`${limit}:${offset}`, strippedData);
       return res.end(JSON.stringify(strippedData));
     }
 
     return res.end(JSON.stringify(cachedData));
-    
+
   } catch (err) {
     console.error("Error occured:", err)
   }
