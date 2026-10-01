@@ -380,5 +380,4 @@ function getEvoChain(evoChain) {
   }
 }
 
-goToDex();
 await fetchPokemon();
