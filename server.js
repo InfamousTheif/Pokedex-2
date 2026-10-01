@@ -37,13 +37,16 @@ function cache(capacity) {
 
 const {get, set, clear} = cache(10);
 
-async function fetchPokeAPI(req, res) {
+async function fetchPokeAPI(req, res, batchSize) {
   try {
     // creating a complete URL using my scheme and the rest of the url
     const myURL = new URL(req.url, `https://${req.headers.host}`);
     const limit = myURL.searchParams.get("limit");
     const offset = myURL.searchParams.get("offset");
-
+    let pokemonData = [];
+    let strippedData;
+    // Using cached data, if possible. 
+    // Otherwise, a new fetch sequence is triggered.
     const cachedData = get(`${limit}:${offset}`);
 
     if(!cachedData) {
@@ -55,24 +58,36 @@ async function fetchPokeAPI(req, res) {
 
       const data = await response.json();
       const { results } = data;
-      
-      const fetchPokemon = results.map(result => fetch(result.url));
-      const pokemonResponses = await Promise.all(fetchPokemon);
+      const pokeURL = results.map( result => result.url);
 
-      if(!pokemonResponses.every(response => response.ok)) {
-        throw new Error(`HTTP Error, Status: ${pokemonResponses[0].status}`);
+      // fetching the items in batches
+      for(let i = 0; i < pokeURL.length; i += batchSize) {
+        // Creates a copy of the pokeURL, except it keeps i+batchSize number of urls, starting from i
+        const batch = pokeURL.slice(i, i + batchSize);
+        
+        const fetchPokemon = batch.map(url => fetch(url));
+        const pokemonResponses = await Promise.all(fetchPokemon);
+
+        if(!pokemonResponses.every(response => response.ok)) {
+          throw new Error(`HTTP Error, Status: ${pokemonResponses[0].status}`);
+        }
+
+        // Pushes the batches into an array
+        pokemonData.push(await Promise.all(pokemonResponses.map(response => response.json())));
+        console.log(pokemonData.length);
+
+        // Stripping the pokemonData array of the unused properties
+        // flat is used to "flatten" the nested arrays into one array
+        // e.g, [[1,2], [3,4], [5,6]] --> [1,2,3,4,5,6]
+        strippedData = pokemonData.flat().map((data) => {
+          return {
+            id: data.id,
+            name: data.name,
+            types: data.types,
+            sprites: data.sprites
+        }});
       }
-
-      const pokemonData = await Promise.all(pokemonResponses.map(response => response.json()));
-
-      // Stripping the pokemonData array of the unused properties
-      const strippedData = pokemonData.map((data) => {
-        return {
-          id: data.id,
-          name: data.name,
-          types: data.types,
-          sprites: data.sprites
-      }});
+  
       set(`${limit}:${offset}`, strippedData);
       return res.end(JSON.stringify(strippedData));
     }
@@ -214,7 +229,7 @@ const server = http.createServer(async (req, res) => {
     }
   } else if (req.url.includes("/api?limit")) {
     try {
-      await fetchPokeAPI(req, res);
+      await fetchPokeAPI(req, res, 18);
     } catch (err) {
       console.error("Error occured:", err);
     }

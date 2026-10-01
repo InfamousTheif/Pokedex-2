@@ -5,8 +5,6 @@ document.body.style.colorScheme = theme;
 const pokemonWrapper = document.querySelector(".pokemon-wrapper_div");
 const paginationWrapper = document.querySelector(".pagination-wrapper_div");
 const rightWrapper = document.querySelector(".right-wrapper_div");
-const weaknessList = document.querySelector(".weak-list_ul");
-const resistanceList = document.querySelector(".resist-list_ul");
 
 
 async function fetchPokemon() {
