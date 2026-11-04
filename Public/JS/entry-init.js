@@ -14,7 +14,6 @@ async function fetchPokemon() {
     throw new Error(`HTTP Error! Status:${response.status}`);
   }
   const data = await response.json();
-  console.log(data);
 
   renderHTML(data[0], data[1], data[2]);
 }

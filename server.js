@@ -30,6 +30,7 @@ function cache(capacity) {
 
   const clear = () => {
     store.clear();
+    return;
   }
 
   return {get, set, clear}
@@ -62,7 +63,7 @@ async function fetchPokeAPI(req, res, batchSize) {
 
       // fetching the items in batches
       for(let i = 0; i < pokeURL.length; i += batchSize) {
-        // Creates a copy of the pokeURL, except it keeps i+batchSize number of urls, starting from i
+        // Creates a copy of the pokeURL, except it only keeps i+batchSize number of urls, starting from i
         const batch = pokeURL.slice(i, i + batchSize);
         
         const fetchPokemon = batch.map(url => fetch(url));
@@ -74,7 +75,6 @@ async function fetchPokeAPI(req, res, batchSize) {
 
         // Pushes the batches into an array
         pokemonData.push(await Promise.all(pokemonResponses.map(response => response.json())));
-        console.log(pokemonData.length);
       }
   
       // Stripping the pokemonData array of the unused properties
@@ -174,7 +174,6 @@ async function fetchEntry(req, res) {
         }
       ]
     ];
-    //  a zero is used because filteredPokemon is an array, and the 0th value stores the data I want.
     return res.end(JSON.stringify(filteredPokemon));
   } catch (err) {
     console.error("Error occured:", err);
