@@ -3,6 +3,7 @@ import { displayTopButton } from "./back-to-top.js";
 const pokedexWrapper = document.querySelector("#pokedex-wrapper");
 const regionSelect = document.querySelector("#dropdown-region");
 const searchBar = document.querySelector("#search-bar");
+const loadingScreen = document.querySelector(".loading");
 
 let currentPokemonList = [];
 
@@ -18,6 +19,7 @@ async function fetchPokemon(limit, offset) {
 
     currentPokemonList = await response.json();
 
+    loadingScreen.style.display = "none"; 
     renderHTML(currentPokemonList);
 
   } catch (err) {
@@ -73,6 +75,7 @@ function regionHandler() {
   const regionName = Object.keys(regions).find(key => JSON.stringify(regions[key]) === JSON.stringify(region1)) || "Kanto";
   regionSelect.value = regionName;
   regionSelect.addEventListener("change", async (e) => {
+    loadingScreen.style.display = "block";
     const region = regions[e.target.value];
     localStorage.setItem("region", JSON.stringify(region));
     await fetchPokemon(region[1], region[0]);
