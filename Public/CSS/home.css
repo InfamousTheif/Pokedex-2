@@ -393,6 +393,7 @@ footer {
 
 /* Loading screen styling */
 .loading {
+  opacity: 1;
   display: block;
   position: absolute;
   inset: 0;
@@ -400,6 +401,10 @@ footer {
   background-color: var(--color-header-bg);
   inline-size: 100%;
   block-size: 100%;
+
+  transition: opacity, display;
+  transition-behavior: allow-discrete;
+  transition-duration: 1s;
 
   div {
     display: flex;
@@ -415,6 +420,11 @@ footer {
     font-size: 1.2rem;
     text-align: center;
   }
+}
+
+.hide-loading {
+  opacity: 0;
+  display: none !important;
 }
 
 .loading_img {
