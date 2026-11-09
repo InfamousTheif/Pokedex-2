@@ -1,5 +1,5 @@
 # Pokedex Website 2
-[This website]() is an improved version of the pokedex website I built before.
+[This website](https://pokedex-2-gmv6.onrender.com/) is an improved version of the pokedex website I built before.
 
 ## Improvements
 - Dark/Light theme is more consistent, and is permanent via localStorage
@@ -8,6 +8,7 @@
 - Faster load speeds
 - Responsive pages
 - Redesigned both pages
+- Implemented a loading screen
 
 ## Screenshots
 ### Home page
@@ -28,5 +29,7 @@
 
 ## Credits 
 - [PokeAPI](https://pokeapi.co/)
+- [Loading screen image](https://www.freeiconspng.com/img/45334)
 
-
+## Socials
+- [Github](https://github.com/InfamousTheif/Pokedex-2)
